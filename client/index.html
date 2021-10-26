@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head title="Начало">
+        <meta charset="utf-8" />
+
+        <meta name="description" content="Начало...">
+        <meta name="author" content="cborka">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="/css/style.css" />
+        <!--<script src="/js/lib.js"></script>-->
+
+    </head>
+    <body>
+
+    <h1> index.html </h1>
+    <form id="user_form" name="user_form" action="/users" method="POST">
+        <table class="form">
+            <tr>
+                <td><label>Id</label></td>
+                <td><input id="id" type="text" name="id" readonly value="0"></td>
+            </tr>
+            <tr>
+                <td><label>Имя</label></td>
+                <td><input id="name" type="text" name="name" placeholder="Name" value="" required></td>
+            </tr>
+            <tr>
+                <td><label>Почта</label></td>
+                <td><input id="email" type="email" name="email" placeholder="email" value="" required></td>
+            </tr>
+            <tr>
+                <td><label>Пароль</label></td>
+                <td><input id="password" type="password" name="password" placeholder="password" value="" ></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit">Применить</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <br>
+    <button onclick="add_record()">Добавить запись</button>
+    <br>
+    <br>
+    <input id="search_id" class="col1" type="text" name="search_id" value="" title="Введите искомое id" placeholder="id" ></td>
+    <input id="search_name" class="" type="text" name="search_name" value="" title="Введите искомое name" placeholder="name"></td>
+    <button id="btn1" onclick="get_query1()">Обновить данные | Найти <b>id</b> или <b>name</b></button>
+    <button id="btn2" onclick="get_deleted()">Показать мягко удалённые</button> <br>
+    <br>
+
+    <div id="users"></div>
+
+    <br>
+    <hr>
+    <br>
+    <button onclick="say('hello')">SayHello</button>
+    <button onclick="promise_test()">Promise Test</button>
+    <br>
+    <br>
+    <div id="log"></div>
+
+    <script src="./js/script1.js" ></script>
+
+    <script>
+
+//        printNumbers(3, 7);
+
+        let promise = new Promise(function(resolve, reject) {
+            resolve("done");
+            //reject(new Error("Whoops!"));
+
+            // через 1 секунду сигнализировать, что задача выполнена с результатом "done"
+            // setTimeout(() => resolve("done"), 2000);
+            // setTimeout(() => reject(new Error("Whoops!")), 1000);
+        });
+//        .then(result => показать результат, err => показать ошибку)
+        promise.finally(() => log('остановить индикатор загрузки'))
+        promise.catch(log); // выведет "Error: Ошибка!" спустя одну секунду
+
+
+        setTimeout(log, 3000, 'zxcv');
+
+//        printNumbers(121, 127);
+//------------------------------------------------------------------------------------------------
+
+        // Восстановить мягко удаленную запись
+        function undelete_record(id) {
+
+            $.get("/users/undelete/"+id, function (data, status) {
+                if (status === 'success') {
+                    get_deleted();
+                } else {
+                    alert("Status: " + status);
+                }
+            });
+        }
+
+        // Мягко удалить запись
+        function delete_record(id) {
+
+            $.get("/users/delete/"+id, function (data, status) {
+                if (status === 'success') {
+                    get_query1();
+                } else {
+                    alert("Status: " + status);
+                }
+            });
+        }
+
+        // Получить удаленные записи
+        function get_deleted() {
+
+            $.get("/users/deleted", function (data, status) {
+                if (status === 'success') {
+                    render(data);
+                } else {
+                    alert("Status: " + status);
+                }
+            });
+        }
+
+        // Получить данные
+        function get_query1() {
+
+            let id = document.getElementById('search_id').value;
+            let name = document.getElementById('search_name').value;
+
+            let params = '';
+
+            if (id.trim() !== '') {
+                params = '/id/'+id;
+            }
+            else if (name.trim() !== '') {
+                params = '/name/'+name;
+            } else {
+                params = '/all';
+            }
+
+            $.get("/users"+params, function (data, status) {
+                if (status === 'success') {
+                    render(data);
+                } else {
+                    alert("Status: " + status);
+                }
+            });
+        }
+
+        // Вывести данные в таблицу
+        function render(data) {
+
+            let content = ' \
+            <table id="table1" class="border"> \
+            <head> \
+                <td class="border bold col1">id</td> \
+                <td class="border bold ">name</td>\
+                <td class="border bold">email</td>\
+                <td class="border bold">password</td>\
+                <td class="border bold">createdAt</td>\
+                <td class="border bold">deletedAt</td>\
+                <td class="border bold">isDeleted</td>\
+            </head>';
+
+            data.forEach(function(item, index, array) {
+
+                content += ` \
+                <tr>\
+                <td class="border">${item.id}</td>\
+                <td class="border">${item.name}</td>\
+                <td class="border">${item.email}</td>\
+                <td class="border">${item.password}</td>\
+                <td class="border">${item.createdAt}</td>\
+                <td class="border">${item.deletedAt}</td>\
+                <td class="border">${item.isDeleted}</td>\
+                <td class="border"><button onclick="edit_record(${item.id},'${item.name}','${item.email}','${item.password}')">Edit</button></td>\
+                <td class="border"><button onclick="delete_record(${item.id})">Delete</button></td>\
+                <td class="border"><button onclick="undelete_record(${item.id})">UnDelete</button></td>\
+                </tr> \
+                `;
+            });
+
+            content += ' \
+            </table> \
+            ';
+            document.getElementById('users').innerHTML = content;
+        }
+
+        // Редактировать запись
+        function edit_record(id, name, email, password) {
+            let form = document.forms['user_form'];
+
+            form.elements['id'].value = id;
+            form.elements['name'].value = name;
+            form.elements['email'].value = email;
+            form.elements['password'].value = password;
+
+            document.getElementById('name').focus();
+        }
+
+        // Добавить запись
+        function add_record() {
+            let form = document.forms['user_form'];
+
+            form.elements['id'].value = 0;
+            form.elements['name'].value = '';
+            form.elements['email'].value = '';
+            form.elements['password'].value = '';
+
+            document.getElementById('name').focus();
+        }
+
+        get_query1();
+
+    </script>
+
+    <!--<script src="./js/script1.js"></script>-->
+
+    </body>
+</html>
+
+
