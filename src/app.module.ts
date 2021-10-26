@@ -1,25 +1,28 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
+import { GraphQLModule } from '@nestjs/graphql'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { config } from './config/config'
 import { typeOrmConfig } from './config/typeorm.config'
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
-import { UsersModule } from './users/users.module';
-//import { User } from './users/users.entity';
-
-//import { GraphQLModule } from '@nestjs/graphql';
+import { ServeStaticModule } from '@nestjs/serve-static'
+import { join } from 'path'
+import { UsersModule } from './users/users.module'
+import { RecipesModule } from './recipes/recipes.module'
 
 @Module({
     imports: [
         ConfigModule.forRoot(config),
         TypeOrmModule.forRootAsync(typeOrmConfig),
         ServeStaticModule.forRoot({
-            rootPath: join(__dirname, '..', 'client'),   // <-- path to the static files
+            rootPath: join(__dirname, '..', 'client'), // <-- path to the static files
         }),
         UsersModule,
+        RecipesModule,
 
-//        GraphQLModule.forRoot({}),
+        GraphQLModule.forRoot({
+            //            installSubscriptionHandlers: true,
+            autoSchemaFile: 'schema.gql',
+        }),
     ],
 
     controllers: [],

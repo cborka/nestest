@@ -1,8 +1,8 @@
-import {Injectable} from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import {Repository, UpdateResult} from 'typeorm';
-import { User } from './users.entity';
-import {UpdateUserDto} from "./dto/update-user.dto";
+import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository, UpdateResult } from 'typeorm'
+import { User } from './users.entity'
+import { UpdateUserDto } from './dto/update-user.dto'
 //import {validate} from "class-validator";
 
 @Injectable()
@@ -14,10 +14,10 @@ export class UsersService {
 
     // Создание новой записи
     create(createUserDto: UpdateUserDto): Promise<User> {
-        const user = new User();
-        user.name = createUserDto.name;
-        user.email = createUserDto.email;
-        user.password = createUserDto.password;
+        const user = new User()
+        user.name = createUserDto.name
+        user.email = createUserDto.email
+        user.password = createUserDto.password
 
         // не до конца разобрался с местной валидацией
         // const errors = validate(user);
@@ -26,7 +26,7 @@ export class UsersService {
         // } else {
         // }
 
-        return this.usersRepository.save(user);
+        return this.usersRepository.save(user)
     }
 
     // Обновление записи
@@ -37,64 +37,66 @@ export class UsersService {
             .set({
                 name: updateUserDto.name,
                 email: updateUserDto.email,
-                password: updateUserDto.password
+                password: updateUserDto.password,
             })
-            .where("id = :id", { id: updateUserDto.id })
-            .execute();
+            .where('id = :id', { id: updateUserDto.id })
+            .execute()
     }
 
     // Обновить или создать запись
-    create_update(updateUserDto: UpdateUserDto): Promise<UpdateResult> | Promise<User> {
+    create_update(
+        updateUserDto: UpdateUserDto,
+    ): Promise<UpdateResult> | Promise<User> {
         if (updateUserDto.id == 0) {
-            return this.create(updateUserDto);
+            return this.create(updateUserDto)
         } else {
-            return this.update(updateUserDto);
+            return this.update(updateUserDto)
         }
     }
 
     // Получить все записи (кроме удалённых однако)
     findAll(): Promise<User[]> {
-        return this.usersRepository.find();
+        return this.usersRepository.find()
     }
 
     // Получить одну запись по id
-    findOne(id: string): Promise<User | undefined> {
-        return this.usersRepository.findOne(id);
+    findOneById(id: string): Promise<User> {
+        return this.usersRepository.findOne(id)
     }
 
     // Получить записи по имени
     findByName(name: string): Promise<User[]> {
         return this.usersRepository
-            .createQueryBuilder("user")
-            .where("user.name = :name", { name: name })
-            .getMany();
+            .createQueryBuilder('user')
+            .where('user.name = :name', { name: name })
+            .getMany()
     }
 
     // Получить записи по id
     findById(id: string): Promise<User[]> {
         return this.usersRepository
-            .createQueryBuilder("user")
-            .where("user.id = :id", { id: id })
+            .createQueryBuilder('user')
+            .where('user.id = :id', { id: id })
             .withDeleted()
-            .getMany();
+            .getMany()
     }
 
     // Получить мягко удаленные зиписи
     findSoftDeleted(): Promise<User[]> {
         return this.usersRepository
-            .createQueryBuilder("user")
-            .where("user.deletedAt IS NOT NULL")
+            .createQueryBuilder('user')
+            .where('user.deletedAt IS NOT NULL')
             .withDeleted()
-            .getMany();
+            .getMany()
     }
 
     // Мягко удалить запись
     async remove(id: string): Promise<void> {
-        await this.usersRepository.softDelete(id);
+        await this.usersRepository.softDelete(id)
     }
 
     // Восстановить мягко удалённую запись
     async undelete(id: string): Promise<void> {
-        await this.usersRepository.restore(id);
+        await this.usersRepository.restore(id)
     }
 }
