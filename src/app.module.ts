@@ -6,6 +6,7 @@ import { config } from './config/config'
 import { typeOrmConfig } from './config/typeorm.config'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { join } from 'path'
+import { JokesModule } from './jokes/jokes.module'
 import { UsersModule } from './users/users.module'
 import { RecipesModule } from './recipes/recipes.module'
 
@@ -16,6 +17,7 @@ import { RecipesModule } from './recipes/recipes.module'
         ServeStaticModule.forRoot({
             rootPath: join(__dirname, '..', 'client'), // <-- path to the static files
         }),
+        JokesModule,
         UsersModule,
         RecipesModule,
 

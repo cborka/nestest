@@ -2,6 +2,25 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""joke"""
+type Joke {
+  id: ID!
+  cat: JokeCategorys!
+  category: String!
+  text: String!
+  flags: [String!]!
+}
+
+enum JokeCategorys {
+  Any
+  Programming
+  Miscellaneous
+  Dark
+  Pun
+  Spooky
+  Christmas
+}
+
 """user"""
 type User {
   id: ID!
@@ -26,6 +45,7 @@ type Recipe {
 scalar Date
 
 type Query {
+  joke(cat: Float!): Joke!
   user1(id: Int!): User!
   user(name: String!): [User!]!
   users: [User!]!
