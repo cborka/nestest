@@ -1,39 +1,43 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, DeleteDateColumn} from 'typeorm';
+import {
+    Entity,
+    Column,
+    PrimaryGeneratedColumn,
+    CreateDateColumn,
+    DeleteDateColumn,
+} from 'typeorm'
+import { Field, Int, ID, ObjectType } from '@nestjs/graphql'
+
 //import {IsEmail} from "class-validator";
 
-@Entity({name: 'users'})
+@Entity({ name: 'users' })
+@ObjectType({ description: 'user' }) //
 export class User {
+    @Field((type) => ID) //
     @PrimaryGeneratedColumn()
-    id: number;
+    id: number
 
-    @Column("varchar", { length: 80 })
-    name: string;
+    @Field()
+    @Column('varchar', { length: 80 })
+    name: string
 
+    @Field()
     @Column()
-//    @IsEmail()
-    email: string;
+    //    @IsEmail()
+    email: string
 
-     @Column()
-     password: string;
+    @Field()
+    @Column()
+    password: string
 
-     // @Column({
-     //     default: "333",
-     //     nullable: false
-     // })
-     // password111: string;
+    @Field()
+    @CreateDateColumn()
+    createdAt: string
 
-    @CreateDateColumn ()
-    createdAt: string;
+    @Field()
+    @DeleteDateColumn()
+    deletedAt: string
 
-    @DeleteDateColumn ()
-    deletedAt: string;
-
+    @Field()
     @Column({ default: true })
-    isDeleted: boolean;
+    isDeleted: boolean
 }
-
-/*
-● id и name;
-● email и password;
-● createdAt и deletedAt.
- */

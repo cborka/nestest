@@ -10,7 +10,7 @@ type User {
   password: String!
   createdAt: String!
   deletedAt: String!
-  isDeleted: String
+  isDeleted: Boolean!
 }
 
 """recipe """
@@ -26,7 +26,9 @@ type Recipe {
 scalar Date
 
 type Query {
-  user(id: Int!): User!
+  user1(id: Int!): User!
+  user(name: String!): [User!]!
+  users: [User!]!
   recipe(id: String!): Recipe!
   recipes(skip: Int = 0, take: Int = 25): [Recipe!]!
 }
