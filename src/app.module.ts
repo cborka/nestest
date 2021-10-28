@@ -8,6 +8,7 @@ import { ServeStaticModule } from '@nestjs/serve-static'
 import { join } from 'path'
 import { JokesModule } from './jokes/jokes.module'
 import { UsersModule } from './users/users.module'
+import { AuthModule } from './auth/auth.module'
 import { RecipesModule } from './recipes/recipes.module'
 
 @Module({
@@ -19,6 +20,7 @@ import { RecipesModule } from './recipes/recipes.module'
         }),
         JokesModule,
         UsersModule,
+        AuthModule,
         RecipesModule,
 
         GraphQLModule.forRoot({
@@ -26,7 +28,6 @@ import { RecipesModule } from './recipes/recipes.module'
             autoSchemaFile: 'schema.gql',
         }),
     ],
-
     controllers: [],
     providers: [],
 })

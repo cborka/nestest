@@ -42,11 +42,11 @@ export class UsersResolver {
     }
 
 
-    @Mutation(() => User)
-    async createUser(@Args('input') input: UserInput): Promise<User> {
-        const response = await this.usersService.createUser(input)
-        return response
-    }
+    // @Mutation(() => User)
+    // async createUser(@Args('input') input: UserInput): Promise<User> {
+    //     const response = await this.usersService.createUser(input)
+    //     return response
+    // }
 
     // @ResolveField()
     // async posts(@Parent() author: User) {

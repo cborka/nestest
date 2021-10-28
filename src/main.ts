@@ -1,6 +1,6 @@
-import { Logger } from '@nestjs/common'         //
-import { ConfigService } from '@nestjs/config'  //
 import { NestFactory } from '@nestjs/core'
+import { ConfigService } from '@nestjs/config'
+import { Logger } from '@nestjs/common'
 
 import { AppModule } from './app.module'
 

@@ -1,34 +1,56 @@
-import { Injectable } from '@nestjs/common'
+import {forwardRef, Inject, Injectable} from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository, UpdateResult } from 'typeorm'
+import { compare, genSalt, hash } from 'bcryptjs'
+import {Md5} from 'ts-md5/dist/md5'
+
 import { User } from './users.entity'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { UserDto } from './dto/user.dto'
-//import {validate} from "class-validator";
+import { AuthService } from '../auth/auth.service'
 
 @Injectable()
 export class UsersService {
+    private _circularDependencyService: AuthService
+
     constructor(
         @InjectRepository(User)
         private readonly usersRepository: Repository<User>,
+        @Inject(forwardRef(() => AuthService))
+        private readonly _authService: AuthService,
+
     ) {}
 
+
     // Создание новой записи
-    create(createUserDto: UpdateUserDto): Promise<User> {
-        const user = new User()
-        user.name = createUserDto.name
-        user.email = createUserDto.email
-        user.password = createUserDto.password
-
-        // не до конца разобрался с местной валидацией
-        // const errors = validate(user);
-        // if (!errors) {
-        //     throw new Error(`Validation failed!`);
-        // } else {
-        // }
-
-        return this.usersRepository.save(user)
+    async create(createUserDto: UpdateUserDto): Promise<User> {
+        console.log('createUserDto.password '+createUserDto.password)
+        return await this.usersRepository.save({
+             id: 0,
+             email: createUserDto.email,
+             password: Md5.hashStr(createUserDto.password),
+             name: createUserDto.name
+        })
     }
+
+    async login(input: UserDto): Promise<User | string> {
+        const { id, name, email, password } = input
+
+        const user = await this.usersRepository.findOne({
+            name
+        })
+
+        if (!user) {
+            return `User ${user.id} ${name} not found `
+        }
+
+        if ((Md5.hashStr(password) !== user.password)) {
+            return await `Invalid credentials ${user.id}`
+        }
+
+        return user
+    }
+
 
     // Создание новой записи (from graphql)
     createUser(UserDto: UserDto): Promise<User> {

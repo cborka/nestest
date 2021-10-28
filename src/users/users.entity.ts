@@ -14,7 +14,7 @@ import { Field, Int, ID, ObjectType } from '@nestjs/graphql'
 export class User {
     @Field((type) => ID) //
     @PrimaryGeneratedColumn()
-    id: number
+    id: number | string
 
     @Field()
     @Column('varchar', { length: 80 })
