@@ -4,14 +4,13 @@ import {
     Int,
     Parent,
     Query,
+    Mutation,
     ResolveField,
     Resolver,
 } from '@nestjs/graphql'
 import { User } from './users.entity'
-//import { User } from './models/user.model'
 import { UsersService } from './users.service'
-import { Recipe } from '../recipes/models/recipe.model'
-import { RecipesArgs } from '../recipes/dto/recipes.args'
+import { UserInput } from './user.input'
 
 @Resolver((of) => User)
 export class UsersResolver {
@@ -42,9 +41,31 @@ export class UsersResolver {
         return this.usersService.findAll()
     }
 
+
+    @Mutation(() => User)
+    async createUser(@Args('input') input: UserInput): Promise<User> {
+        const response = await this.usersService.createUser(input)
+        return response
+    }
+
     // @ResolveField()
     // async posts(@Parent() author: User) {
     //     const { id } = author;
     //     return this.postsService.findAll({ authorId: id });
     // }
 }
+
+
+// @Mutation(() => UserType)
+// async signUp(@Args('input') input: CreateUserInput): Promise<UserType> {
+//     const response = await this._authService.signUp(input)
+//
+//     return response
+// }
+
+
+// async signUp(input: UserDto): Promise<UserEntity> {
+//     const user = await this._usersService.createUser(input)
+//
+//     return user
+// }

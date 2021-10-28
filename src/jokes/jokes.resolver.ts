@@ -1,6 +1,7 @@
 import { NotFoundException } from '@nestjs/common'
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql'
-import { Joke, JokeCategorys } from './joke.model'
+import { Joke } from './joke.model'
+import { JokeCategorys } from './category.enum'
 import { JokesService } from './jokes.service'
 
 @Resolver((of) => Joke)
@@ -12,8 +13,8 @@ export class JokesResolver {
         return await this.jokesService.getJoke(cat)
     }
 
-    // @Query((returns) => Joke)
-    // async jokeAll(): Promise<Joke> {
-    //     return await this.jokesService.getAnyJoke()
-    // }
+    @Query((returns) => Joke)
+    async jokeAll(): Promise<Joke> {
+        return await this.jokesService.getJoke()
+    }
 }

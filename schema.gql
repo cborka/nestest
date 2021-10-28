@@ -45,7 +45,8 @@ type Recipe {
 scalar Date
 
 type Query {
-  joke(cat: Float!): Joke!
+  joke(cat: String!): Joke!
+  jokeAll: Joke!
   user1(id: Int!): User!
   user(name: String!): [User!]!
   users: [User!]!
@@ -54,8 +55,15 @@ type Query {
 }
 
 type Mutation {
+  createUser(input: UserInput!): User!
   addRecipe(newRecipeData: NewRecipeInput!): Recipe!
   removeRecipe(id: String!): Boolean!
+}
+
+input UserInput {
+  name: String!
+  email: String!
+  password: String!
 }
 
 input NewRecipeInput {

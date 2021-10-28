@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository, UpdateResult } from 'typeorm'
 import { User } from './users.entity'
 import { UpdateUserDto } from './dto/update-user.dto'
+import { UserDto } from './dto/user.dto'
 //import {validate} from "class-validator";
 
 @Injectable()
@@ -25,6 +26,16 @@ export class UsersService {
         //     throw new Error(`Validation failed!`);
         // } else {
         // }
+
+        return this.usersRepository.save(user)
+    }
+
+    // Создание новой записи (from graphql)
+    createUser(UserDto: UserDto): Promise<User> {
+        const user = new User()
+        user.name = UserDto.name
+        user.email = UserDto.email
+        user.password = UserDto.password
 
         return this.usersRepository.save(user)
     }

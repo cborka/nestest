@@ -1,18 +1,5 @@
-import { registerEnumType, Field, ID, ObjectType } from '@nestjs/graphql'
-
-export enum JokeCategorys {
-    Any,
-    Programming,
-    Miscellaneous,
-    Dark,
-    Pun,
-    Spooky,
-    Christmas,
-}
-
-registerEnumType(JokeCategorys, {
-    name: 'JokeCategorys',
-})
+import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { JokeCategorys } from './category.enum'
 
 @ObjectType({ description: 'joke' })
 export class Joke {
@@ -31,20 +18,3 @@ export class Joke {
     @Field((type) => [String])
     flags: string[]
 }
-
-// "error": false,
-//     "category": "Pun",
-//     "type": "twopart",
-//     "setup": "What do you call a witch at the beach?",
-//     "delivery": "A Sandwich.",
-//     "flags": {
-//     "nsfw": false,
-//         "religious": false,
-//         "political": false,
-//         "racist": false,
-//         "sexist": false,
-//         "explicit": false
-// },
-// "id": 176,
-//     "safe": true,
-//     "lang": "en"
