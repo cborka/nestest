@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { forwardRef, Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository, UpdateResult } from 'typeorm'
 import { compare, genSalt, hash } from 'bcryptjs'
@@ -11,7 +11,7 @@ import { AuthService } from '../auth/auth.service'
 
 @Injectable()
 export class UsersService {
-    private _circularDependencyService: AuthService
+    //    private _circularDependencyService: AuthService
 
     constructor(
         @InjectRepository(User)

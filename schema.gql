@@ -21,6 +21,29 @@ enum JokeCategorys {
   Christmas
 }
 
+"""user"""
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  createdAt: String!
+  deletedAt: String!
+  isDeleted: Boolean!
+}
+
+type UserType {
+  email: String!
+}
+
+type Auth {
+  accessToken: String!
+  tokenType: String!
+  expiresIn: Float!
+  refreshToken: String!
+  idToken: String
+}
+
 """recipe """
 type Recipe {
   id: ID!
@@ -33,37 +56,33 @@ type Recipe {
 """Date custom scalar type"""
 scalar Date
 
-"""user"""
-type User {
-  id: ID!
-  name: String!
-  email: String!
-  password: String!
-  createdAt: String!
-  deletedAt: String!
-  isDeleted: Boolean!
-}
-
 type Query {
   joke(cat: String!): Joke!
   jokeAll: Joke!
   user1(id: Int!): User!
   user(name: String!): [User!]!
   users: [User!]!
+
+  """Returns pong"""
+  ping: String!
+  signIn(input: CreateUserInput!): Auth!
   recipe(id: String!): Recipe!
   recipes(skip: Int = 0, take: Int = 25): [Recipe!]!
 }
 
-type Mutation {
-  createUser(input: UserInput!): User!
-  addRecipe(newRecipeData: NewRecipeInput!): Recipe!
-  removeRecipe(id: String!): Boolean!
-}
-
-input UserInput {
+input CreateUserInput {
+  id: String!
   name: String!
   email: String!
   password: String!
+}
+
+type Mutation {
+  signUp(input: CreateUserInput!): UserType!
+  protectedMethod: String!
+  refreshToken(accessToken: String!, refreshToken: String!): Auth!
+  addRecipe(newRecipeData: NewRecipeInput!): Recipe!
+  removeRecipe(id: String!): Boolean!
 }
 
 input NewRecipeInput {

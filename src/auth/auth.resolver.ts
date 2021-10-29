@@ -3,8 +3,8 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 
 import { AuthService } from './auth.service'
 import { UserType } from '../users/graphql/types/user.type'
-//import { CreateUserInput } from '../users/graphql/inputs/create-user.input'
-import { UserDto as CreateUserInput} from '../users/dto/user.dto'
+import { CreateUserInput } from '../users/graphql/inputs/create-user.input'
+//import { UserDto as CreateUserInput} from '../users/dto/user.dto'
 import { AuthType } from './graphql/types/auth.type'
 import { AuthGuard } from './guards/auth.guard'
 

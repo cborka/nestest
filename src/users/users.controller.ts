@@ -1,14 +1,11 @@
 //import {Body, Controller, Delete, Get, Param, Post, Put, Redirect} from '@nestjs/common';
 import { Body, Controller, Get, Param, Post, Redirect } from '@nestjs/common'
+
 import { UsersService } from './users.service'
 import { User } from './users.entity'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { UserDto } from './dto/user.dto'
 import { UpdateResult } from 'typeorm'
-
-import { UpdateUserDto } from './dto/update-user.dto'
-import { User } from './users.entity'
-import { UsersService } from './users.service'
 
 @Controller('users')
 export class UsersController {

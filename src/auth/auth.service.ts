@@ -1,6 +1,6 @@
 import {
     forwardRef,
-//    HttpService,
+    //    HttpService,
     Inject,
     Injectable,
     Logger,
@@ -31,6 +31,7 @@ const DEFAULT_ACCESS_TOKEN_TTL = 600
 
 @Injectable()
 export class AuthService {
+    //    private _circularDependencyService: UsersService
     private _logger = new Logger(AuthService.name)
 
     private readonly _alg: string
@@ -43,7 +44,7 @@ export class AuthService {
 
     constructor(
         private readonly _configService: ConfigService,
-//        private readonly _httpService: HttpService,
+        //        private readonly _httpService: HttpService,
         @Inject(forwardRef(() => UsersService))
         private readonly _usersService: UsersService,
         @InjectRepository(RefreshTokenEntity)
@@ -91,7 +92,7 @@ export class AuthService {
 
         //Пока не понял что тут сделать
         //const { id } = loginResults
-        const { id } = {id: "5"}
+        const { id } = { id: '5' }
 
         const payload: JwtPayload = {
             sub: id,

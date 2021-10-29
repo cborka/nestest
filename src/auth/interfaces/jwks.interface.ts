@@ -1,4 +1,4 @@
-import { sign as Algorithm } from 'jsonwebtoken'
+import { Algorithm } from 'jsonwebtoken'
 //import { Algorithm } from 'jsonwebtoken'
 
 export interface Jwks {
