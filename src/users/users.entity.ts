@@ -1,3 +1,4 @@
+import { Field, Int, ID, ObjectType } from '@nestjs/graphql'
 import {
     Entity,
     Column,
@@ -5,9 +6,8 @@ import {
     CreateDateColumn,
     DeleteDateColumn,
 } from 'typeorm'
-import { Field, Int, ID, ObjectType } from '@nestjs/graphql'
 
-//import {IsEmail} from "class-validator";
+// import {IsEmail} from "class-validator";
 
 @Entity({ name: 'users' })
 @ObjectType({ description: 'user' }) //

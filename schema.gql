@@ -21,17 +21,6 @@ enum JokeCategorys {
   Christmas
 }
 
-"""user"""
-type User {
-  id: ID!
-  name: String!
-  email: String!
-  password: String!
-  createdAt: String!
-  deletedAt: String!
-  isDeleted: Boolean!
-}
-
 """recipe """
 type Recipe {
   id: ID!
@@ -43,6 +32,17 @@ type Recipe {
 
 """Date custom scalar type"""
 scalar Date
+
+"""user"""
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  createdAt: String!
+  deletedAt: String!
+  isDeleted: Boolean!
+}
 
 type Query {
   joke(cat: String!): Joke!

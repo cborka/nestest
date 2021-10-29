@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import axios from 'axios'
 
-import { Joke } from './joke.model'
-import { JokeCategorys } from './category.enum'
-
 import { GraphqlService } from '../graphql/graphql.service'
 
-const gqlService = new GraphqlService
+import { JokeCategorys } from './category.enum'
+import { Joke } from './joke.model'
+
+const gqlService = new GraphqlService()
 
 @Injectable()
 export class JokesService {
@@ -20,26 +20,28 @@ export class JokesService {
     /**
      * Request for a joke using Async - await
      */
-    //async getJoke(cat: JokeCategorys = JokeCategorys.Any) {
+    // async getJoke(cat: JokeCategorys = JokeCategorys.Any) {
     async getJoke(cat: JokeCategorys = JokeCategorys.Any) {
-        let joke = this.joke
+        const { joke } = this
         try {
-            const response = await axios.get(this.jokesUrl+cat.toString())
-            const data = response.data
+            const response = await axios.get(this.jokesUrl + cat.toString())
+            const { data } = response
 
             joke.id = data.id
             joke.category = data.category
             joke.cat = cat.toString()
 
             if (data.type === 'twopart') {
-                joke.text = data.setup + ' -- ' + data.delivery
+                joke.text = `${data.setup} -- ${data.delivery}`
             } else {
                 joke.text = data.joke
             }
 
             joke.flags = []
-            for (let key in data.flags) {
-                if (data.flags[key]) joke.flags.push(key)
+            for (const key in data.flags) {
+                if (data.flags[key]) {
+                    joke.flags.push(key)
+                }
             }
         } catch (error) {
             throw new NotFoundException('Joke error')
@@ -50,8 +52,7 @@ export class JokesService {
     /**
      * Request for a joke using GraphQL
      */
-     gqlGetJoke () {
-
+    gqlGetJoke() {
         const query = `
         {
             joke (cat: "Any" ){
@@ -62,6 +63,6 @@ export class JokesService {
             }
         }
         `
-        return gqlService.request(query);
+        return gqlService.request(query)
     }
 }

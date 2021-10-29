@@ -6,18 +6,25 @@ import { UpdateUserDto } from './dto/update-user.dto'
 import { UserDto } from './dto/user.dto'
 import { UpdateResult } from 'typeorm'
 
+import { UpdateUserDto } from './dto/update-user.dto'
+import { User } from './users.entity'
+import { UsersService } from './users.service'
+
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
     // Запрос на создание или обновление записи
     @Post('')
-//    @Redirect('/login.html')
+    //    @Redirect('/login.html')
     create_update(
         @Body() updateUserDto: UpdateUserDto,
-    ): Promise<UpdateResult> | Promise<User>  | string{
-         let xxx = this.usersService.create_update(updateUserDto)
-         return 'Пользователь добавлен<br><a href="/login.html">Вход</a><br><a href="/index.html">На главную</a><br>'+xxx;
+    ): Promise<UpdateResult> | Promise<User> | string {
+        let xxx = this.usersService.create_update(updateUserDto)
+        return (
+            'Пользователь добавлен<br><a href="/login.html">Вход</a><br><a href="/index.html">На главную</a><br>' +
+            xxx
+        )
     }
 
     // Запрос на создание или обновление записи
@@ -25,9 +32,9 @@ export class UsersController {
     login(
         @Body() userDto: UserDto,
     ): Promise<UpdateResult> | Promise<User | string> {
-         let xxx = this.usersService.login(userDto)
+        let xxx = this.usersService.login(userDto)
         return xxx
-//         return 'Успешно зашли<br><a href="/index.html">На главную</a><br>';
+        //         return 'Успешно зашли<br><a href="/index.html">На главную</a><br>';
     }
 
     // Запрос на мягкое удаление записи
@@ -77,5 +84,7 @@ export class UsersController {
     }
 
     @Get('/5')
-      x() { return '555'}
+    x() {
+        return '555'
+    }
 }

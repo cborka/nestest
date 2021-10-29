@@ -8,9 +8,10 @@ import {
     ResolveField,
     Resolver,
 } from '@nestjs/graphql'
+
+import { UserInput } from './user.input'
 import { User } from './users.entity'
 import { UsersService } from './users.service'
-import { UserInput } from './user.input'
 
 @Resolver((of) => User)
 export class UsersResolver {
@@ -41,7 +42,6 @@ export class UsersResolver {
         return this.usersService.findAll()
     }
 
-
     // @Mutation(() => User)
     // async createUser(@Args('input') input: UserInput): Promise<User> {
     //     const response = await this.usersService.createUser(input)
@@ -55,14 +55,12 @@ export class UsersResolver {
     // }
 }
 
-
 // @Mutation(() => UserType)
 // async signUp(@Args('input') input: CreateUserInput): Promise<UserType> {
 //     const response = await this._authService.signUp(input)
 //
 //     return response
 // }
-
 
 // async signUp(input: UserDto): Promise<UserEntity> {
 //     const user = await this._usersService.createUser(input)

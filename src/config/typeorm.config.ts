@@ -4,7 +4,7 @@ import {
     TypeOrmModuleOptions,
 } from '@nestjs/typeorm'
 
-//import { User } from '../users/users.entity';
+// import { User } from '../users/users.entity';
 
 const DEFAULT_PSQL_HOST = 'localhost'
 const DEFAULT_PSQL_PORT = 5432
@@ -22,7 +22,7 @@ export const typeOrmConfig: TypeOrmModuleAsyncOptions = {
 
         return {
             type: 'postgres',
-//            entities: [User],
+            //            entities: [User],
             entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
             database,
             host: configService.get('PSQL_HOST') || DEFAULT_PSQL_HOST,
@@ -38,9 +38,9 @@ export const typeOrmConfig: TypeOrmModuleAsyncOptions = {
             // Когда приложение запускало миграции при старте
             // оно не могло найти файлы миграций без этогй строчки
             // ==> А не надо запускать миграции при старте приложения !!!
-            //migrations: [`${__dirname}/../migrations/*{.ts,.js}`],
+            // migrations: [`${__dirname}/../migrations/*{.ts,.js}`],
             migrationsRun: false,
-            dropSchema: false
+            dropSchema: false,
 
             // Придумать способ, как отключать миграции. И дать возможность Typeorm самому синхронизировать энтити.
             // migrationsRun:
@@ -54,7 +54,6 @@ export const typeOrmConfig: TypeOrmModuleAsyncOptions = {
             // dropSchema:
             //     configService.get('DROP_DATABASE') === '1' &&
             //     configService.get('NODE_ENV') === 'development-no-migration',
-
         }
     },
     inject: [ConfigService],

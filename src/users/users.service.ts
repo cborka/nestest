@@ -1,8 +1,8 @@
-import {forwardRef, Inject, Injectable} from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository, UpdateResult } from 'typeorm'
 import { compare, genSalt, hash } from 'bcryptjs'
-import {Md5} from 'ts-md5/dist/md5'
+import { Md5 } from 'ts-md5/dist/md5'
 
 import { User } from './users.entity'
 import { UpdateUserDto } from './dto/update-user.dto'
@@ -18,18 +18,16 @@ export class UsersService {
         private readonly usersRepository: Repository<User>,
         @Inject(forwardRef(() => AuthService))
         private readonly _authService: AuthService,
-
     ) {}
-
 
     // Создание новой записи
     async create(createUserDto: UpdateUserDto): Promise<User> {
-        console.log('createUserDto.password '+createUserDto.password)
+        console.log('createUserDto.password ' + createUserDto.password)
         return await this.usersRepository.save({
-             id: 0,
-             email: createUserDto.email,
-             password: Md5.hashStr(createUserDto.password),
-             name: createUserDto.name
+            id: 0,
+            email: createUserDto.email,
+            password: Md5.hashStr(createUserDto.password),
+            name: createUserDto.name,
         })
     }
 
@@ -37,20 +35,19 @@ export class UsersService {
         const { id, name, email, password } = input
 
         const user = await this.usersRepository.findOne({
-            name
+            name,
         })
 
         if (!user) {
             return `User ${user.id} ${name} not found `
         }
 
-        if ((Md5.hashStr(password) !== user.password)) {
+        if (Md5.hashStr(password) !== user.password) {
             return await `Invalid credentials ${user.id}`
         }
 
         return user
     }
-
 
     // Создание новой записи (from graphql)
     createUser(UserDto: UserDto): Promise<User> {
