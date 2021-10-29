@@ -44,18 +44,6 @@ type Auth {
   idToken: String
 }
 
-"""recipe """
-type Recipe {
-  id: ID!
-  title: String!
-  description: String
-  creationDate: Date!
-  ingredients: [String!]!
-}
-
-"""Date custom scalar type"""
-scalar Date
-
 type Query {
   joke(cat: String!): Joke!
   jokeAll: Joke!
@@ -66,8 +54,6 @@ type Query {
   """Returns pong"""
   ping: String!
   signIn(input: CreateUserInput!): Auth!
-  recipe(id: String!): Recipe!
-  recipes(skip: Int = 0, take: Int = 25): [Recipe!]!
 }
 
 input CreateUserInput {
@@ -81,16 +67,4 @@ type Mutation {
   signUp(input: CreateUserInput!): UserType!
   protectedMethod: String!
   refreshToken(accessToken: String!, refreshToken: String!): Auth!
-  addRecipe(newRecipeData: NewRecipeInput!): Recipe!
-  removeRecipe(id: String!): Boolean!
-}
-
-input NewRecipeInput {
-  title: String!
-  description: String
-  ingredients: [String!]!
-}
-
-type Subscription {
-  recipeAdded: Recipe!
 }

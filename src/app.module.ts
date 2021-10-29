@@ -9,7 +9,6 @@ import { join } from 'path'
 import { JokesModule } from './jokes/jokes.module'
 import { UsersModule } from './users/users.module'
 import { AuthModule } from './auth/auth.module'
-import { RecipesModule } from './recipes/recipes.module'
 
 @Module({
     imports: [
@@ -21,7 +20,6 @@ import { RecipesModule } from './recipes/recipes.module'
         JokesModule,
         UsersModule,
         AuthModule,
-        RecipesModule,
 
         GraphQLModule.forRoot({
             //            installSubscriptionHandlers: true,

@@ -1,52 +1,63 @@
-# NestJS boilerplate application
+# Здравствуйте
 
-## Branches
-- [master](https://github.com/i-link-pro-team/nestjs-boilerplate/tree/master): Only NestJS
-- **[typeorm+postgres](https://github.com/i-link-pro-team/nestjs-boilerplate/tree/typeorm+postgres): NestJS + PostgreSQL + TypeORM**
-- [mongoose+mongo](https://github.com/i-link-pro-team/nestjs-boilerplate/tree/mongoose+mongo): NestJS + MongoDB + Mongoose
+Чтобы вам не копаться в коде расскажу что я сделал.
 
-## Features
-* Node v14.17.1
-* [Conventional commits](https://www.conventionalcommits.org/en/v1.0.0-beta.3/)
-* ESLint
-* Launch scripts (prebuild, build, start, test, etc.)
-* Precommit prettier
-* VSCode debug launcher
-* Strict ruled tsconfig.json
-* Migrations
-* Docker compose with postgres
+Почти вся неделя ушла на освоение GraphQL, с которым я раньше вообще не сталкивался.
 
-## Installation
+Для шуток работает интерфейс http://localhost:3000/graphql
+ 
+Все шутки
 
-```bash
-$ npm install
+```
+{
+  jokeAll {
+    id
+    cat
+    category
+    text
+    flags
+  }
+}
+```
+и с выбором категории
+```
+{
+  joke (cat: "Any" ){
+    id
+    cat
+    category
+    text
+    flags
+  }
+}
+```
+Также шутки можно получать по адресу http://localhost:3000/jokes/gql тоже с использованием graphql-запроса.
+
+Ещё можно с пользователями там работать, создавать и смотреть.
+```
+mutation  {
+  createUser(input: {
+    name: "User",
+    email: "user@mail",
+    password:  "userpass"
+  }) {
+    id
+    name
+  }
+}
 ```
 
-## Running the app
+После этого у меня остался один день, я хотел быстренько интегрировать пример в свою программу и сделать на его основе задачу.
 
-```bash
-# if your default nodeJS version is not v14.17.1
-$ nvm use 
+Ошибка была в том, что я решил оставить своего пользователя, со своими полями, описаниями и так далее.
 
-# development
-$ npm run start
+И пока там ковырялся с совмешением время ушло.
 
-# watch mode
-$ npm run start:dev
+Всё, кроме шуток, надо причёсывать и прореживать, но я не успел и можно даже не смотреть.
 
-# production mode
-$ npm run start:prod
-```
+Там ничего сложного, просто много разных новых для меня библиотек и функций, которые надо использовать.
 
-## Test
+В общем, неделя была интересной и познавательной.
 
-```bash
-# unit tests
-$ npm run test
 
-# e2e tests
-$ npm run test:e2e
 
-# test coverage
-$ npm run test:cov
-```

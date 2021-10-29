@@ -24,7 +24,8 @@
     "migration:create": "npm run typeorm:cli -- migration:create -d src/migrations -n",
     "migration:generate": "npm run typeorm:cli -- migration:generate -p true -d src/migrations -n user",
     "migration:run": "npm run typeorm:cli -- migration:run",
-    "migration:revert": "npm run typeorm:cli -- migration:revert"
+    "migration:revert": "npm run typeorm:cli -- migration:revert",
+    "git:log": "git log --all --pretty=oneline"
   },
   "jest": {
     "moduleFileExtensions": [
