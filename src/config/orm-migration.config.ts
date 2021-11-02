@@ -18,5 +18,4 @@ const connectionOptions: ConnectionOptions = {
         migrationsDir: `${__dirname}/../migrations`,
     },
 }
-
 export = connectionOptions

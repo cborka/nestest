@@ -1,4 +1,4 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn} from "typeorm";
 
 //const USER_TABLE_NAME = 'users'
 
@@ -21,12 +21,17 @@ export class UserEntity {
     @Column({type: String})
     password: string
 
-    @Column({type: "timestamp", default: () => Date.now()})
+    // @CreateDateColumn()
+    // createdAt: string
+    //
+    // @DeleteDateColumn()
+    // deletedAt: string
+//    @CreateDateColumn()
+//    @CreateDateColumn({type: "timestamp", default: Date.now()})
+    @CreateDateColumn({type: "timestamp"})
     createdAt: string
 
-    @Column({type: "timestamp", nullable: true, default: undefined})
+//    @DeleteDateColumn()
+    @DeleteDateColumn({type: "timestamp", nullable: true, default: undefined})
     deletedAt: string
 }
-
-
-
