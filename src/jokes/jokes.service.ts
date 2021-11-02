@@ -65,4 +65,56 @@ export class JokesService {
         `
         return gqlService.request(query)
     }
+
+
+    async gqlGetJoke2(): Promise<string> {
+        let ret = 'ret_value'
+        // const query = `
+        // {
+        //     joke (cat: "Any" ){
+        //         id
+        //         category
+        //         text
+        //         flags
+        //     }
+        // }
+        // `
+
+//         const query = `{
+// "query": "{ jokeAll { id text } }"
+// }
+//         `
+        let cat = "Spooky";
+        const query = {
+            query: ` query ($cat: String!)
+            { 
+                joke (cat: $cat) { 
+                    id 
+                    text
+                    cat
+                    category 
+                    flags
+                }  
+            } `
+            ,
+            variables: {
+                cat: cat
+            }
+
+        }
+        await axios.post("http://localhost:3000/graphql",
+             query,
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {ret = response.data; console.log(response.data)}
+            )
+            .catch( (error) =>  console.log(error)
+            );
+
+        return await ret ;
+//        return gqlService.request(query)
+    }
 }

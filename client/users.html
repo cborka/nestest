@@ -60,6 +60,8 @@
     <br>
     <button onclick="say('hello')">SayHello</button>
     <button onclick="promise_test()">Promise Test</button>
+    <button onclick="gql()">graphql_test</button>
+    <button onclick="gql2()">graphql_test2</button>
     <br>
     <br>
     <div id="log"></div>
@@ -67,6 +69,46 @@
     <script src="./js/script1.js" ></script>
 
     <script>
+
+
+
+        // Запрос graphQL
+        function gql() {
+//            $.post(URL,data,callback);
+             alert(">graphql_test");
+
+                $.post("/graphql",
+                    `{
+                        joke (cat: "Any" ){
+                            id
+                            category
+                            text
+                            flags
+                        }
+                    }`
+                    ,
+                    function(data, status){
+//                        alert("Data: " + data + "\nStatus: " + status);
+                       // alert("Status: " + status);
+                        alert("Status: ");
+                    }
+                );
+         }
+
+        function gql2() {
+//            $.post(URL,data,callback);
+            alert(">graphql_test");
+
+            $.get("graphql", function (data, status) {
+                alert(">graphql_test2");
+            if (status === 'success') {
+                alert("Status: " );
+            } else {
+                alert("Status: ");
+            }
+
+         });
+        }
 
 //------------------------------------------------------------------------------------------------
 

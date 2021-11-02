@@ -9,6 +9,6 @@ export class JokesController {
     // Запрос graphql
     @Get('/gql')
     gql(@Param('id') id: string): Promise<string> {
-        return this.jokesService.gqlGetJoke()
+        return this.jokesService.gqlGetJoke2()
     }
 }
