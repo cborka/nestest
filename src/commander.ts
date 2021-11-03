@@ -20,7 +20,11 @@ import inquirer = require('inquirer')
 // import joke from './joke'
 // import test from './test'
 
-commander.version('1.0.0').description('Jokes reader and tester')
+//commander.version('1.0.0').description('Jokes reader and tester')
+
+commander.command('t').action(() => {
+    console.log("T")
+})
 
 commander.command('hi').action(() => {
     inquirer
