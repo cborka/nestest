@@ -7,7 +7,7 @@ import {
     Resolver,
 } from '@nestjs/graphql'
 
-import {UserEntity} from "../users/entities/user.entity";
+import {UserEntity} from "../users/user.entity";
 import {UsersService} from "../users/users.service";
 import {JokeEntity} from './joke.entity';
 import {JokesService} from "./jokes.service";

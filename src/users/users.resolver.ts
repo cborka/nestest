@@ -12,15 +12,17 @@ import {
 } from '@nestjs/graphql'
 
 //import { UserInput } from './user.input'
-import { UserEntity } from './entities/user.entity'
+import { UserEntity } from './user.entity'
 import { UsersService } from './users.service'
 import {StatusesService} from "../statuses/statuses.service";
+import {GroupsService} from "../groups/groups.service";
 
 @Resolver(() =>UserEntity)
 export class UsersResolver {
     constructor(
         private usersService: UsersService,
-        private statusesService: StatusesService
+        private statusesService: StatusesService,
+        private groupsService: GroupsService,
     ) {}
 
     // @Query((returns) => UserEntity)
@@ -50,9 +52,12 @@ export class UsersResolver {
 
     @ResolveField()
     async status(@Parent() user: UserEntity) {
-//        const { id } = user;
         return this.statusesService.findOneById( user.statusId);
-//        return  user.id;
+    }
+
+    @ResolveField()
+    async groups(@Parent() user: UserEntity) {
+        return this.groupsService.findGroupsById(user.id);
     }
 
 

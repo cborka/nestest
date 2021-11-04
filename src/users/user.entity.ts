@@ -7,10 +7,11 @@ import {
     OneToMany,
     PrimaryGeneratedColumn
 } from "typeorm";
-import {StatusEntity} from "../../statuses/status.entity";
-import {JokeEntity} from "../../jokes/joke.entity";
-import {UserInGroupEntity} from "./userInGroup.entity";
-import {RoleEntity} from "../../roles/role.entity";
+import {StatusEntity} from "../statuses/status.entity";
+import {JokeEntity} from "../jokes/joke.entity";
+import {UserInGroupEntity} from "../userInGroup/userInGroup.entity";
+import {RoleEntity} from "../roles/role.entity";
+import {GroupEntity} from '../groups/group.entity';
 
 const USER_TABLE_NAME = 'users'
 
@@ -56,14 +57,18 @@ export class UserEntity {
 
     @Field( { nullable: true })
     @Column({type: String, nullable: true })
-    public roleId: string
+    roleId: string
 
     @Field(type => RoleEntity, { nullable: true })
     @ManyToOne(() => RoleEntity, role => role.users)
     role?: RoleEntity;
 
+    @Field(type => [JokeEntity])
     @OneToMany(() => JokeEntity, joke => joke.user)
     jokes: JokeEntity[];
+
+    @Field(type => [GroupEntity])
+    groups: GroupEntity[];
 
     @OneToMany(() => UserInGroupEntity, userInGroup => userInGroup.user)
     public userInGroup!: UserInGroupEntity[];

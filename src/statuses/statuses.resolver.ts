@@ -13,7 +13,7 @@ import {
 //import { UserInput } from './user.input'
 import { StatusEntity } from './status.entity'
 import {StatusesService } from './statuses.service'
-import {UserEntity} from "../users/entities/user.entity";
+import {UserEntity} from "../users/user.entity";
 import {UsersService} from "../users/users.service";
 
 @Resolver(() =>StatusEntity)

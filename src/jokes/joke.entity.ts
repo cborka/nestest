@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import {UserEntity} from "../users/entities/user.entity";
+import {UserEntity} from "../users/user.entity";
 
 const JOKES_TABLE_NAME = 'jokes'
 

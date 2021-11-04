@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
 import {JokeEntity} from "./joke.entity";
-import {UserEntity} from '../users/entities/user.entity';
+import {UserEntity} from '../users/user.entity';
 import {UsersService} from '../users/users.service';
 import {JokesService} from './jokes.service';
 import {JokesResolver} from "./jokes.resolver";

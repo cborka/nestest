@@ -1,7 +1,8 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import {Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {LevelEntity} from "../levels/level.entity";
-import {UserInGroupEntity} from "../users/entities/userInGroup.entity";
+import {UserInGroupEntity} from "../userInGroup/userInGroup.entity";
+import {UserEntity} from "../users/user.entity";
 
 const GROUPS_TABLE_NAME = 'groups'
 
@@ -30,7 +31,9 @@ export class GroupEntity {
     @JoinColumn()
     level: LevelEntity;
 
-//    @Field(type => UserInGroupEntity)
+    @Field(type => [UserEntity])
+    users: UserEntity[];
+
     @OneToMany(() => UserInGroupEntity, userInGroup => userInGroup.group)
     public userInGroup!: UserInGroupEntity[];
 }

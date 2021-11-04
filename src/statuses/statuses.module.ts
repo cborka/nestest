@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import {StatusesService } from './statuses.service'
 import { StatusEntity } from './status.entity'
 import { StatusesResolver } from './statuses.resolver'
-import {UserEntity} from "../users/entities/user.entity";
+import {UserEntity} from "../users/user.entity";
 import {UsersService} from "../users/users.service";
 // import { AuthModule } from '../auth/auth.module'
 

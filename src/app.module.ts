@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module'
 import { StatusesModule } from './statuses/statuses.module'
 import { JokesModule } from './jokes/jokes.module'
 import {GroupsModule} from "./groups/groups.module";
+import {LevelsModule} from "./levels/levels.module";
 
 @Module({
     imports: [
@@ -22,7 +23,7 @@ import {GroupsModule} from "./groups/groups.module";
         StatusesModule,
         JokesModule,
         GroupsModule,
-//        LevelsModule,
+        LevelsModule,
 
     ],
 })

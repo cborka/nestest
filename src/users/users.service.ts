@@ -4,8 +4,8 @@ import { Repository } from 'typeorm'
 //import { compare, genSalt, hash } from 'bcryptjs'
 //import { Md5 } from 'ts-md5/dist/md5'
 
-import { UserEntity } from './entities/user.entity'
-import { UserDto } from './dto/user.dto'
+import { UserEntity } from './user.entity'
+import { UserDto } from './user.dto'
 
 @Injectable()
 export class UsersService {
@@ -62,6 +62,21 @@ export class UsersService {
             .withDeleted()
             .getMany()
     }
+
+    /**
+     * Get records for the specified groupId
+     *
+     * @param groupId
+     */
+    async findGroupsById(groupId: string): Promise<UserEntity[]> {
+        return await this.usersRepository
+            .createQueryBuilder('user')
+            .where('user.id IN (SELECT "userId" FROM user_in_group WHERE "groupId" = :groupId)',{ groupId: groupId })
+            .withDeleted()
+            .getMany()
+    }
+
+
 
     privet(): string {
         return 'Привет, командир!'

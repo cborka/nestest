@@ -13,7 +13,7 @@ import {
 //import { UserInput } from './user.input'
 import { RoleEntity } from './role.entity'
 import {RolesService } from './roles.service'
-import {UserEntity} from "../users/entities/user.entity";
+import {UserEntity} from "../users/user.entity";
 import {UsersService} from "../users/users.service";
 
 @Resolver(() =>RoleEntity)
