@@ -1,6 +1,6 @@
 import {Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {UserEntity} from "./user.entity";
-import {GroupEntity} from "../../groups/entity/group.entity";
+import {GroupEntity} from "../../groups/group.entity";
 
 const USER_IN_GROUP_TABLE_NAME = 'user_in_group'
 
@@ -19,10 +19,10 @@ export class UserInGroupEntity {
 
 //    PostToCategory
     @Column()
-    public userId!: number;
+    public userId!: string;
 
     @Column()
-    public groupId!: number;
+    public groupId!: string;
 
     @ManyToOne(() => UserEntity, user => user.userInGroup)
     public user!: UserEntity;

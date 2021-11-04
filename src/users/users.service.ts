@@ -6,7 +6,6 @@ import { Repository } from 'typeorm'
 
 import { UserEntity } from './entities/user.entity'
 import { UserDto } from './dto/user.dto'
-//import { AuthService } from '../auth/auth.service'
 
 @Injectable()
 export class UsersService {
@@ -28,9 +27,40 @@ export class UsersService {
         })
     }
 
-    // Получить все записи (кроме удалённых однако)
+    // Получить все записи
     findAll(): Promise<UserEntity[]> {
         return this.usersRepository.find()
+    }
+
+    // Получить одну запись по id
+    findOneById(id: string): Promise<UserEntity | undefined> {
+        return this.usersRepository.findOne(id)
+    }
+
+    /**
+     * Get records for the specified statusId
+     *
+     * @param statusId
+     */
+    async findByStatusId(statusId: string): Promise<UserEntity[]> {
+        return await this.usersRepository
+            .createQueryBuilder('user')
+            .where('user.statusId = :statusId', { statusId: statusId })
+            .withDeleted()
+            .getMany()
+    }
+
+    /**
+     * Get records for the specified roleId
+     *
+     * @param roleId
+     */
+    async findByRoleId(roleId: string): Promise<UserEntity[]> {
+        return await this.usersRepository
+            .createQueryBuilder('user')
+            .where('user.roleId = :roleId', { roleId: roleId })
+            .withDeleted()
+            .getMany()
     }
 
     privet(): string {
