@@ -1,26 +1,23 @@
 import {
+    Args,
+    Mutation,
     Parent,
-//    Args,
-//    Int,
-//    Parent,
     Query,
     ResolveField,
-//    Mutation,
-//    ResolveField,
     Resolver,
 } from '@nestjs/graphql'
 
-//import { UserInput } from './user.input'
 import { StatusEntity } from './status.entity'
-import {StatusesService } from './statuses.service'
-import {UserEntity} from "../users/user.entity";
-import {UsersService} from "../users/users.service";
+import { StatusesService } from './statuses.service'
+import { UserEntity } from '../users/user.entity'
+import { UsersService } from '../users/users.service'
+import { StatusInput } from './status.input'
 
-@Resolver(() =>StatusEntity)
+@Resolver(() => StatusEntity)
 export class StatusesResolver {
     constructor(
         private statusesService: StatusesService,
-        private usersService: UsersService
+        private usersService: UsersService,
     ) {}
 
     @Query((statuses) => [StatusEntity])
@@ -30,7 +27,14 @@ export class StatusesResolver {
 
     @ResolveField()
     async users(@Parent() status: StatusEntity): Promise<UserEntity[]> {
-//        return this.usersService.findAll();
-        return this.usersService.findByStatusId(status.id);
+        //        return this.usersService.findAll();
+        return this.usersService.findByStatusId(status.id)
+    }
+
+    @Mutation(() => UserEntity)
+    async createStatus(
+        @Args('input') input: StatusInput,
+    ): Promise<StatusEntity | any> {
+        return await this.statusesService.createStatus(input)
     }
 }

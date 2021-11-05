@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 
 import { StatusEntity } from './status.entity'
-import { StatusDto } from './status.dto'
+import { StatusInput } from './status.input'
 //import { AuthService } from '../auth/auth.service'
 
 @Injectable()
@@ -14,7 +14,7 @@ export class StatusesService {
     ) {}
 
     // Создание новой записи
-    async create(statusrDto: StatusDto): Promise<StatusEntity> {
+    async createStatus(statusrDto: StatusInput): Promise<StatusEntity> {
         return await this.statusesRepository.save({
             name: statusrDto.name,
         })
@@ -29,5 +29,4 @@ export class StatusesService {
     findOneById(id: string): Promise<StatusEntity | undefined> {
         return this.statusesRepository.findOne(id)
     }
-
 }

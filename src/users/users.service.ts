@@ -5,7 +5,8 @@ import { Repository } from 'typeorm'
 //import { Md5 } from 'ts-md5/dist/md5'
 
 import { UserEntity } from './user.entity'
-import { UserDto } from './user.dto'
+//import { UserDto } from './user.dto'
+import { UserInput } from './user.input'
 
 @Injectable()
 export class UsersService {
@@ -17,13 +18,15 @@ export class UsersService {
     ) {}
 
     // Создание новой записи
-    async create(userDto: UserDto): Promise<UserEntity> {
+    async createUser(userDto: UserInput): Promise<UserEntity> {
         return await this.usersRepository.save({
             name: userDto.name,
             surName: userDto.surName,
             login: userDto.login,
-            password: userDto.password
-//            password: Md5.hashStr(userDto.password),
+            password: userDto.password,
+            statusId: userDto.statusId,
+            roleId: userDto.roleId,
+            //            password: Md5.hashStr(userDto.password),
         })
     }
 
@@ -71,12 +74,13 @@ export class UsersService {
     async findGroupsById(groupId: string): Promise<UserEntity[]> {
         return await this.usersRepository
             .createQueryBuilder('user')
-            .where('user.id IN (SELECT "userId" FROM user_in_group WHERE "groupId" = :groupId)',{ groupId: groupId })
+            .where(
+                'user.id IN (SELECT "userId" FROM user_in_group WHERE "groupId" = :groupId)',
+                { groupId: groupId },
+            )
             .withDeleted()
             .getMany()
     }
-
-
 
     privet(): string {
         return 'Привет, командир!'

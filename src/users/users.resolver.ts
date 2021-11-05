@@ -1,23 +1,25 @@
 //import { NotFoundException } from '@nestjs/common'
 import {
+    Args,
+    Mutation,
     Parent,
-//    Args,
-//    Int,
-//    Parent,
+    //    Args,
+    //    Int,
+    //    Parent,
     Query,
     ResolveField,
-//    Mutation,
-//    ResolveField,
+    //    Mutation,
+    //    ResolveField,
     Resolver,
 } from '@nestjs/graphql'
 
-//import { UserInput } from './user.input'
+import { UserInput } from './user.input'
 import { UserEntity } from './user.entity'
 import { UsersService } from './users.service'
-import {StatusesService} from "../statuses/statuses.service";
-import {GroupsService} from "../groups/groups.service";
+import { StatusesService } from '../statuses/statuses.service'
+import { GroupsService } from '../groups/groups.service'
 
-@Resolver(() =>UserEntity)
+@Resolver(() => UserEntity)
 export class UsersResolver {
     constructor(
         private usersService: UsersService,
@@ -52,20 +54,20 @@ export class UsersResolver {
 
     @ResolveField()
     async status(@Parent() user: UserEntity) {
-        return this.statusesService.findOneById( user.statusId);
+        return this.statusesService.findOneById(user.statusId)
     }
 
     @ResolveField()
     async groups(@Parent() user: UserEntity) {
-        return this.groupsService.findGroupsById(user.id);
+        return this.groupsService.findGroupsById(user.id)
     }
 
-
-    // @Mutation(() => User)
-    // async createUser(@Args('input') input: UserInput): Promise<User> {
-    //     const response = await this.usersService.createUser(input)
-    //     return response
-    // }
+    @Mutation(() => UserEntity)
+    async createUser(
+        @Args('input') input: UserInput,
+    ): Promise<UserEntity | any> {
+        return await this.usersService.createUser(input)
+    }
 
     // @ResolveField()
     // async posts(@Parent() author: User) {
