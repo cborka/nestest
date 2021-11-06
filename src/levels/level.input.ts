@@ -1,10 +1,10 @@
 import { Field, InputType } from '@nestjs/graphql'
 
 @InputType()
-export class StatusInput {
+export class LevelInput {
     @Field()
     id: string
 
     @Field()
-    name!: string
+    name: string
 }

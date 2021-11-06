@@ -4,6 +4,7 @@ import { Repository } from 'typeorm'
 
 import {LevelEntity} from "./level.entity";
 import {LevelDto} from "./level.dto";
+import {LevelInput} from "./level.input";
 
 @Injectable()
 export class LevelsService {
@@ -16,6 +17,13 @@ export class LevelsService {
     async create(levelDto: LevelDto): Promise<LevelEntity> {
         return await this.levelsRepository.save({
             name: levelDto.name,
+        })
+    }
+
+    // Создание новой записи
+    async createLevel(levelInput: LevelInput): Promise<LevelEntity> {
+        return await this.levelsRepository.save({
+            name: levelInput.name
         })
     }
 

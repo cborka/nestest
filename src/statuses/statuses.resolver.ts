@@ -27,14 +27,13 @@ export class StatusesResolver {
 
     @ResolveField()
     async users(@Parent() status: StatusEntity): Promise<UserEntity[]> {
-        //        return this.usersService.findAll();
         return this.usersService.findByStatusId(status.id)
     }
 
-    @Mutation(() => UserEntity)
+    @Mutation(() => StatusEntity)
     async createStatus(
         @Args('input') input: StatusInput,
-    ): Promise<StatusEntity | any> {
+    ): Promise<StatusEntity> {
         return await this.statusesService.createStatus(input)
     }
 }

@@ -3,13 +3,8 @@ import {
     Args,
     Mutation,
     Parent,
-    //    Args,
-    //    Int,
-    //    Parent,
     Query,
     ResolveField,
-    //    Mutation,
-    //    ResolveField,
     Resolver,
 } from '@nestjs/graphql'
 
@@ -18,12 +13,14 @@ import { UserEntity } from './user.entity'
 import { UsersService } from './users.service'
 import { StatusesService } from '../statuses/statuses.service'
 import { GroupsService } from '../groups/groups.service'
+import {RolesService} from "../roles/roles.service";
 
 @Resolver(() => UserEntity)
 export class UsersResolver {
     constructor(
         private usersService: UsersService,
         private statusesService: StatusesService,
+        private rolesService: RolesService,
         private groupsService: GroupsService,
     ) {}
 
@@ -58,14 +55,19 @@ export class UsersResolver {
     }
 
     @ResolveField()
+    async role(@Parent() user: UserEntity) {
+        return this.rolesService.findOneById(user.roleId)
+    }
+
+    @ResolveField()
     async groups(@Parent() user: UserEntity) {
-        return this.groupsService.findGroupsById(user.id)
+        return this.groupsService.findGroupsByUserId(user.id)
     }
 
     @Mutation(() => UserEntity)
     async createUser(
         @Args('input') input: UserInput,
-    ): Promise<UserEntity | any> {
+    ): Promise<UserEntity> {
         return await this.usersService.createUser(input)
     }
 

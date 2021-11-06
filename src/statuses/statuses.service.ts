@@ -4,7 +4,6 @@ import { Repository } from 'typeorm'
 
 import { StatusEntity } from './status.entity'
 import { StatusInput } from './status.input'
-//import { AuthService } from '../auth/auth.service'
 
 @Injectable()
 export class StatusesService {
@@ -14,10 +13,15 @@ export class StatusesService {
     ) {}
 
     // Создание новой записи
-    async createStatus(statusrDto: StatusInput): Promise<StatusEntity> {
-        return await this.statusesRepository.save({
-            name: statusrDto.name,
-        })
+    async createStatus(statusInput: StatusInput): Promise<StatusEntity> {
+        try {
+            return await this.findOneByName(statusInput.name);
+        }
+        catch (e) {
+            return await this.statusesRepository.save({
+                name: statusInput.name
+            })
+        }
     }
 
     // Получить все записи
@@ -28,5 +32,14 @@ export class StatusesService {
     // Получить одну запись по id
     findOneById(id: string): Promise<StatusEntity | undefined> {
         return this.statusesRepository.findOne(id)
+    }
+
+    // Получить одну запись по name
+    async findOneByName(statusName: string): Promise<StatusEntity> {
+        return await this.statusesRepository
+            .createQueryBuilder('status')
+            .where('status.name = :statusName', {statusName: statusName})
+            .withDeleted()
+            .getOneOrFail()
     }
 }

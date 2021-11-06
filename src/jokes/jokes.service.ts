@@ -2,10 +2,8 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 
-// import { UserEntity } from './entities/user.entity'
-// import { UserDto } from './dto/user.dto'
 import {JokeEntity} from "./joke.entity";
-import {JokeDto} from "./joke.dto";
+import {JokeInput} from "./joke.input";
 
 @Injectable()
 export class JokesService {
@@ -15,13 +13,14 @@ export class JokesService {
     ) {}
 
     // Создание новой записи
-    async create(jokeDto: JokeDto): Promise<JokeEntity> {
+    async createJoke(jokeInput: JokeInput): Promise<JokeEntity> {
         return await this.jokesRepository.save({
-            name: jokeDto.name,
-            text: jokeDto.text,
-            rate: jokeDto.rate,
-            like: jokeDto.like,
-            view: jokeDto.view,
+            name: jokeInput.name,
+            text: jokeInput.text,
+            rate: jokeInput.rate,
+            like: jokeInput.like,
+            view: jokeInput.view,
+            userId: jokeInput.userId
         })
     }
 

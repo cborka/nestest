@@ -8,9 +8,11 @@ import {LevelsService} from "../levels/levels.service";
 import {LevelEntity} from "../levels/level.entity";
 import {UsersService} from "../users/users.service";
 import {UserEntity} from "../users/user.entity";
+import {UserInGroupService} from "../userInGroup/userInGroup.service";
+import {UserInGroupEntity} from "../userInGroup/userInGroup.entity";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([GroupEntity, LevelEntity, UserEntity])],
-    providers: [GroupsService, LevelsService, UsersService, GroupsResolver]
+    imports: [TypeOrmModule.forFeature([GroupEntity, LevelEntity, UserEntity, UserInGroupEntity])],
+    providers: [GroupsService, LevelsService, UsersService, UserInGroupService, GroupsResolver]
 })
 export class GroupsModule {}

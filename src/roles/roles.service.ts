@@ -3,8 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 
 import { RoleEntity } from './role.entity'
-import { RoleDto } from './role.dto'
-//import { AuthService } from '../auth/auth.service'
+import {RoleInput} from "./role.input";
 
 @Injectable()
 export class RolesService {
@@ -14,10 +13,15 @@ export class RolesService {
     ) {}
 
     // Создание новой записи
-    async create(statusrDto: RoleDto): Promise<RoleEntity> {
-        return await this.rolesRepository.save({
-            name: statusrDto.name,
-        })
+    async createRole(roleInput: RoleInput): Promise<RoleEntity> {
+        try {
+            return await this.findOneByName(roleInput.name);
+        }
+        catch (e) {
+            return await this.rolesRepository.save({
+                name: roleInput.name
+            })
+        }
     }
 
     // Получить все записи
@@ -26,8 +30,20 @@ export class RolesService {
     }
 
     // Получить одну запись по id
-    findOneById(id: string): Promise<RoleEntity | undefined> {
-        return this.rolesRepository.findOne(id)
+    async findOneById(id: string | undefined): Promise<RoleEntity | undefined> {
+        if (id){
+            return await this.rolesRepository.findOneOrFail(id)
+        }
+        return await undefined
+    }
+
+    // Получить одну запись по name
+    async findOneByName(roleName: string): Promise<RoleEntity> {
+        return await this.rolesRepository
+            .createQueryBuilder('status')
+            .where('role.name = :roleName', {roleName: roleName})
+            .withDeleted()
+            .getOneOrFail()
     }
 
 }

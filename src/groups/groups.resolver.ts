@@ -1,18 +1,18 @@
 import {
+    Args,
+    Mutation,
     Parent,
     Query,
     ResolveField,
-//    Mutation,
-//    ResolveField,
     Resolver,
 } from '@nestjs/graphql'
-
 
 import {GroupEntity} from "./group.entity";
 import {GroupsService} from "./groups.service";
 import {LevelEntity} from "../levels/level.entity";
 import {LevelsService} from "../levels/levels.service";
 import {UsersService} from '../users/users.service';
+import {GroupInput} from "./group.input";
 
 @Resolver(() =>GroupEntity)
 export class GroupsResolver {
@@ -34,8 +34,14 @@ export class GroupsResolver {
 
     @ResolveField()
     async users(@Parent() group: GroupEntity) {
-        return this.usersService.findGroupsById(group.id);
+        return this.usersService.findUsersByGroupId(group.id);
     }
 
+    @Mutation(() => GroupEntity)
+    async createGroup(
+        @Args('input') input: GroupInput,
+    ): Promise<GroupEntity | any> {
+        return await this.groupsService.createGroup(input)
+    }
 
 }

@@ -18,14 +18,14 @@ export class UsersService {
     ) {}
 
     // Создание новой записи
-    async createUser(userDto: UserInput): Promise<UserEntity> {
+    async createUser(userInput: UserInput): Promise<UserEntity> {
         return await this.usersRepository.save({
-            name: userDto.name,
-            surName: userDto.surName,
-            login: userDto.login,
-            password: userDto.password,
-            statusId: userDto.statusId,
-            roleId: userDto.roleId,
+            name: userInput.name,
+            surName: userInput.surName,
+            login: userInput.login,
+            password: userInput.password,
+            statusId: userInput.statusId,
+            roleId: userInput.roleId,
             //            password: Md5.hashStr(userDto.password),
         })
     }
@@ -71,7 +71,7 @@ export class UsersService {
      *
      * @param groupId
      */
-    async findGroupsById(groupId: string): Promise<UserEntity[]> {
+    async findUsersByGroupId(groupId: string): Promise<UserEntity[]> {
         return await this.usersRepository
             .createQueryBuilder('user')
             .where(
@@ -80,6 +80,22 @@ export class UsersService {
             )
             .withDeleted()
             .getMany()
+    }
+
+    /**
+     * Get records for the specified userInGroupId
+     *
+     * @param userInGroupId
+     */
+    async findUserByUserInGroupId(userInGroupId: string): Promise<UserEntity> {
+        return await this.usersRepository
+            .createQueryBuilder('user')
+            .where(
+                'user.id = (SELECT "userId" FROM user_in_group WHERE id = :userInGroupId)',
+                { userInGroupId: userInGroupId },
+            )
+            .withDeleted()
+            .getOneOrFail()
     }
 
     privet(): string {

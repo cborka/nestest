@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 
 import {GroupEntity} from "./group.entity";
-import {GroupDto} from "./group.dto";
+import {GroupInput} from "./group.input";
 
 @Injectable()
 export class GroupsService {
@@ -13,10 +13,11 @@ export class GroupsService {
     ) {}
 
     // Создание новой записи
-    async create(groupDto: GroupDto): Promise<GroupEntity> {
+    async createGroup(groupInput: GroupInput): Promise<GroupEntity> {
         return await this.groupsRepository.save({
-            name: groupDto.name,
-            shortName: groupDto.shortName,
+            name: groupInput.name,
+            shortName: groupInput.shortName,
+            levelId: groupInput.levelId,
         })
     }
 
@@ -43,11 +44,28 @@ export class GroupsService {
      *
      * @param userId
      */
-    async findGroupsById(userId: string): Promise<GroupEntity[]> {
+    async findGroupsByUserId(userId: string): Promise<GroupEntity[]> {
         return await this.groupsRepository
             .createQueryBuilder('group')
             .where('group.id IN (SELECT "groupId" FROM user_in_group WHERE "userId" = :userId)',{ userId: userId })
             .withDeleted()
             .getMany()
     }
+
+    /**
+     * Get records for the specified userInGroupId
+     *
+     * @param userInGroupId
+     */
+    async findGroupByUserInGroupId(userInGroupId: string): Promise<GroupEntity> {
+        return await this.groupsRepository
+            .createQueryBuilder('group')
+            .where(
+                'group.id = (SELECT "groupId" FROM user_in_group WHERE id = :userInGroupId)',
+                { userInGroupId: userInGroupId },
+            )
+            .withDeleted()
+            .getOneOrFail()
+    }
+
 }

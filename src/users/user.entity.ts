@@ -49,7 +49,7 @@ export class UserEntity {
 
     @Field()
     @Column({ type: String })
-    public statusId!: string
+    statusId!: string
 
     @Field((type) => StatusEntity)
     @ManyToOne(() => StatusEntity, (status) => status.users)
@@ -61,7 +61,7 @@ export class UserEntity {
 
     @Field((type) => RoleEntity, { nullable: true })
     @ManyToOne(() => RoleEntity, (role) => role.users)
-    role?: RoleEntity
+    role: RoleEntity
 
     @Field((type) => [JokeEntity])
     @OneToMany(() => JokeEntity, (joke) => joke.user)
