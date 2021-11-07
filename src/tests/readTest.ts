@@ -1,4 +1,7 @@
-
+/*
+Здесь я делал функции обращения к конкретным данным
+и хотел сделать функцию занесения всё схемы, но не успел.
+ */
 import {GraphqlService} from "../graphql/graphql.service";
 import {GraphqlQuery} from "../graphql/graphql.query";
 import {GraphqlQueryAnswer} from "../graphql/graphql.answer";

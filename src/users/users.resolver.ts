@@ -70,23 +70,5 @@ export class UsersResolver {
     ): Promise<UserEntity> {
         return await this.usersService.createUser(input)
     }
-
-    // @ResolveField()
-    // async posts(@Parent() author: User) {
-    //     const { id } = author;
-    //     return this.postsService.findAll({ authorId: id });
-    // }
 }
 
-// @Mutation(() => UserType)
-// async signUp(@Args('input') input: CreateUserInput): Promise<UserType> {
-//     const response = await this._authService.signUp(input)
-//
-//     return response
-// }
-
-// async signUp(input: UserDto): Promise<UserEntity> {
-//     const user = await this._usersService.createUser(input)
-//
-//     return user
-// }

@@ -19,5 +19,4 @@ export class StatusEntity {
     @Field(type => [UserEntity])
     @OneToMany(() => UserEntity, user => user.status)
     users: UserEntity[];
-
 }

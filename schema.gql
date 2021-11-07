@@ -1,0 +1,146 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""status"""
+type StatusEntity {
+  id: ID!
+  name: String!
+  users: [UserEntity!]!
+}
+
+"""joke"""
+type JokeEntity {
+  id: ID!
+  name: String!
+  text: String!
+  rate: Float!
+  like: Float!
+  view: String!
+  userId: String!
+  user: UserEntity!
+}
+
+"""level"""
+type LevelEntity {
+  id: ID!
+  name: String!
+  group: GroupEntity!
+}
+
+"""group"""
+type GroupEntity {
+  id: ID!
+  name: String!
+  shortName: String!
+  levelId: String!
+  level: LevelEntity!
+  users: [UserEntity!]!
+}
+
+"""userInGroup"""
+type UserInGroupEntity {
+  id: ID!
+  createdAt: DateTime!
+  deletedAt: DateTime
+  userId: String!
+  groupId: String!
+  user: UserEntity!
+  group: GroupEntity!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""role"""
+type RoleEntity {
+  id: ID!
+  name: String!
+  users: [UserEntity!]!
+}
+
+"""user"""
+type UserEntity {
+  id: ID!
+  name: String!
+  surName: String!
+  login: String!
+  password: String!
+  createdAt: String!
+  deletedAt: String
+  statusId: String!
+  status: StatusEntity!
+  roleId: String
+  role: RoleEntity
+  jokes: [JokeEntity!]!
+  groups: [GroupEntity!]!
+}
+
+type Query {
+  users: [UserEntity!]!
+  statuses: [StatusEntity!]!
+  jokes: [JokeEntity!]!
+  groups: [GroupEntity!]!
+  levels: [LevelEntity!]!
+  roles: [RoleEntity!]!
+  userInGroup: [UserInGroupEntity!]!
+}
+
+type Mutation {
+  createUser(input: UserInput!): UserEntity!
+  createStatus(input: StatusInput!): StatusEntity!
+  createJoke(input: JokeInput!): JokeEntity!
+  createGroup(input: GroupInput!): GroupEntity!
+  createLevel(input: LevelInput!): LevelEntity!
+  createRole(input: RoleInput!): RoleEntity!
+  createUserInGroup(input: UserInGroupInput!): UserInGroupEntity!
+}
+
+input UserInput {
+  id: String!
+  name: String!
+  surName: String!
+  login: String!
+  password: String!
+  statusId: String!
+  roleId: String
+}
+
+input StatusInput {
+  id: String!
+  name: String!
+}
+
+input JokeInput {
+  id: String!
+  name: String!
+  text: String!
+  rate: Float!
+  like: Float!
+  view: String!
+  userId: String!
+}
+
+input GroupInput {
+  id: String!
+  name: String!
+  shortName: String!
+  levelId: String!
+}
+
+input LevelInput {
+  id: String!
+  name: String!
+}
+
+input RoleInput {
+  id: String!
+  name: String!
+}
+
+input UserInGroupInput {
+  userId: String!
+  groupId: String!
+}

@@ -9,9 +9,6 @@ import {JokesResolver} from "./jokes.resolver";
 
 @Module({
     imports: [TypeOrmModule.forFeature([JokeEntity, UserEntity])],
-    // controllers: [UsersController],
-    // providers: [UsersService, UsersResolver],
-    // exports: [UsersService],
     controllers: [],
     providers: [JokesService, UsersService, JokesResolver],
     exports: [],

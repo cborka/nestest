@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
-// import { UsersController } from './users.controller'
 import { UsersService } from './users.service'
 import { UserEntity } from './user.entity'
 import { UsersResolver } from './users.resolver'
@@ -15,14 +14,10 @@ import {RolesService} from "../roles/roles.service";
 import {RoleEntity} from "../roles/role.entity";
 import {UserInGroupService} from "../userInGroup/userInGroup.service";
 import {UserInGroupEntity} from "../userInGroup/userInGroup.entity";
-// import { AuthModule } from '../auth/auth.module'
 
 @Module({
 //    imports: [TypeOrmModule.forFeature([User]), forwardRef(() => AuthModule)],
     imports: [TypeOrmModule.forFeature([UserEntity, StatusEntity, RoleEntity, JokeEntity, GroupEntity, UserInGroupEntity])],
-    // controllers: [UsersController],
-    // providers: [UsersService, UsersResolver],
-    // exports: [UsersService],
     controllers: [],
     providers: [UsersService, StatusesService, RolesService, JokesService, GroupsService, UserInGroupService, UsersResolver],
     exports: [],

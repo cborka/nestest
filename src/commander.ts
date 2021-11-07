@@ -1,7 +1,18 @@
 #!/usr/bin/env node
 
+/*
+Здесь всё работает, а может уже не всё ...
+но я пока не понял как сделать красивую цепочку промисов
+или что-то подобное, чтобы заносить данные, которые зависят друг от друга,
+Например, сначала надо занести Level, получить его ID, а затем заносить Group и так далее.
+
+Здесь незаконченные пробы.
+ */
+
+
+
 /**
- * Commander for launch and testing requests for joke resource
+ * Commander for launch and testing requests
  *
  * @see README.md for details
  *
@@ -53,65 +64,6 @@ commander.command('test2').action(async () => {
     console.log(JSON.stringify(await gqlTest.readLevels2()))
 })
 
-commander.command('lvl3').action(async () => {
-    const gqlTest: GraphqlTest = new GraphqlTest()
-
-    const sid: string = "43"
-    let levelId: string;
-    let groupId: string;
-    let status1Id: string;
-    let status2Id: string;
-    let role1Id: string;
-    let role2Id: string;
-    let user1Id: string;
-    let user2Id: string;
-    let joke1Id: string;
-    let joke2Id: string;
-    let joke3Id: string;
-    let joke4Id: string;
-
-    gqlTest.addLevel('level' + sid)
-    .then(
-        (ret) => {
-            if (! ret.message) {
-                levelId = ret.data.createLevel.id
-                console.log("levelId " + levelId)
-                return gqlTest.addGroup('Group' + sid, 'GR' + sid, levelId);
-//                return levelId
-            }
-            else {
-                console.log('=> ' + ret.message)
-            }
-        }
-        ,(err) => {console.log('err: ' + err)}
-    )
-    .then(
-        (ret) => {
-            if (! ret.message) {
-                groupId = ret.data.createGroup.id
-                console.log("groupId " + groupId)
-//                return gqlTest.addGroup('Group' + sid, 'GR' + sid, levelId);
-                return groupId
-            }
-            else {
-                console.log('=> ' + ret.message)
-            }
-        }
-        ,(err) => {console.log('err: ' + err)}
-    )
-    .then(
-        (groupId) => {
-            console.log("++groupId " + groupId)
-            console.log("++levelId " + levelId)
-
-        }
-    )
-    .catch((err) => {
-        console.log('ERRORR: ' + err)
-    })
-
-})
-
 commander.command('lvl2').action(async () => {
     const gqlTest: GraphqlTest = new GraphqlTest()
 
@@ -148,16 +100,6 @@ commander.command('lvl2').action(async () => {
         }
         ,(err) => {console.log('err: ' + err)}
     )
-    // .then(
-    //     (levelId) => {
-    //         console.log("+levelId " + levelId)
-    //         console.log("+sid " + sid)
-    //         let ret = gqlTest.addGroup('Group' + sid, 'GR' + sid, levelId);
-    //         groupId = ret.data.createLevel.id
-    //         console.log("groupId " + groupId)
-    //         return groupId
-    //     }
-    // )
     .then(
         (groupId) => {
             console.log("++groupId " + groupId)
@@ -196,37 +138,7 @@ commander.command('lvl').action(async () => {
         console.log('ERRORR: ' + err)
     }
 
-
-
-//    let id = await gqlTest.addLevel('level15').data.createLevel.id;
-//    console.log(id);
-
-    //console.log(JSON.stringify(await gqlTest.addLevel('level15')))
-
-
-    // gqlTest.addLevel('level13')
-    // .then(
-    //     (ret) => {
-    //         if (! ret.message) {
-    //             console.log(JSON.stringify(ret.data.createLevel.id))
-    //         }
-    //         else {
-    //             console.log('Error: ' + ret.message)
-    //             // console.log('-> ' + ret.response.data)
-    //             // console.log(ret.response.data)
-    //         }
-    //     }
-    // )
-    // .catch((err) => {
-    //     console.log('ERRORR: ' + err)
-    // })
-
-
-//    console.log(gqlTest.readLevels())
 })
-
-
-
 
 commander.command('t').action(() => {
     console.log("T")

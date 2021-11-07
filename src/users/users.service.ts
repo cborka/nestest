@@ -1,17 +1,12 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-//import { compare, genSalt, hash } from 'bcryptjs'
-//import { Md5 } from 'ts-md5/dist/md5'
 
 import { UserEntity } from './user.entity'
-//import { UserDto } from './user.dto'
 import { UserInput } from './user.input'
 
 @Injectable()
 export class UsersService {
-    //    private _circularDependencyService: AuthService
-
     constructor(
         @InjectRepository(UserEntity)
         private readonly usersRepository: Repository<UserEntity>,
@@ -26,7 +21,6 @@ export class UsersService {
             password: userInput.password,
             statusId: userInput.statusId,
             roleId: userInput.roleId,
-            //            password: Md5.hashStr(userDto.password),
         })
     }
 
@@ -96,9 +90,5 @@ export class UsersService {
             )
             .withDeleted()
             .getOneOrFail()
-    }
-
-    privet(): string {
-        return 'Привет, командир!'
     }
 }

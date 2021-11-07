@@ -1,4 +1,8 @@
-//import { Injectable, NotFoundException } from '@nestjs/common'
+/*
+Здесь выполенние запросов к серверу GraphQL
+Сервер полностью готов, вся схема работает если заносить и выполнять запросы в ручном режиме.
+ */
+
 import { Injectable } from '@nestjs/common'
 import axios from 'axios'
 
@@ -33,12 +37,10 @@ export class GraphqlService {
             )
             .catch( (error) => {return error}
             );
-
-        //return await ret ;
     }
 
     public async request2(query: GraphqlQuery): Promise<GraphqlQueryAnswer> {
-//        let ret = 'ret_value'
+
         let url = "http://localhost:3000/graphql"
         const ret = await axios.post(url, query,
             {
@@ -46,13 +48,8 @@ export class GraphqlService {
                     'Content-Type': 'application/json'
                 }
             });
-            // .then(response => {return response.data; }
-            // )
-            // .catch( (error) => {return error}
-            // );
 
         return await ret.data;
     }
-
 }
 
