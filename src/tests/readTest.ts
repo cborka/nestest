@@ -40,7 +40,7 @@ export class GraphqlTest {
         return await this.gqlService.request(query)
     }
 
-    async readLevels2(): Promise<GraphqlQueryAnswer> {
+    async readLevels(): Promise<GraphqlQueryAnswer> {
         const query: GraphqlQuery = {
             query: `
              {
@@ -52,10 +52,7 @@ export class GraphqlTest {
             `,
         }
         const ret = await this.gqlService.request2(query)
-        //        console.log(ret)
-        return await ret
-
-        //        return await this.gqlService.request2(query);
+        return await ret.data.levels
     }
 
     async addLevel(levelName: string): Promise<string> {
@@ -72,7 +69,6 @@ export class GraphqlTest {
             }
              `,
         }
-        //        return await this.gqlService.request(query);
         const ret = await this.gqlService.request2(query)
         return await ret.data.createLevel.id
     }
