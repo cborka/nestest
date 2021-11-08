@@ -13,7 +13,8 @@ import { UserEntity } from './user.entity'
 import { UsersService } from './users.service'
 import { StatusesService } from '../statuses/statuses.service'
 import { GroupsService } from '../groups/groups.service'
-import {RolesService} from "../roles/roles.service";
+import { RolesService } from '../roles/roles.service'
+import { JokesService } from '../jokes/jokes.service'
 
 @Resolver(() => UserEntity)
 export class UsersResolver {
@@ -22,27 +23,8 @@ export class UsersResolver {
         private statusesService: StatusesService,
         private rolesService: RolesService,
         private groupsService: GroupsService,
+        private jokesService: JokesService,
     ) {}
-
-    // @Query((returns) => UserEntity)
-    // async user1(@Args('id', { type: () => Int }) id: number) {
-    //     const user1 = await this.usersService.findOneById(String(id))
-    //     if (!user1) {
-    //         throw new NotFoundException(id)
-    //     }
-    //     return user1
-    //
-    //     //        return this.usersService.findOneById(String(id));
-    // }
-    //
-    // @Query((returns) => [User])
-    // async user(@Args('name') name: string) {
-    //     const user = await this.usersService.findByName(name)
-    //     if (!user) {
-    //         throw new NotFoundException(name)
-    //     }
-    //     return user
-    // }
 
     @Query((users) => [UserEntity])
     async users(): Promise<UserEntity[]> {
@@ -64,11 +46,13 @@ export class UsersResolver {
         return this.groupsService.findGroupsByUserId(user.id)
     }
 
+    @ResolveField()
+    async jokes(@Parent() user: UserEntity) {
+        return this.jokesService.findJokesByUserId(user.id)
+    }
+
     @Mutation(() => UserEntity)
-    async createUser(
-        @Args('input') input: UserInput,
-    ): Promise<UserEntity> {
+    async createUser(@Args('input') input: UserInput): Promise<UserEntity> {
         return await this.usersService.createUser(input)
     }
 }
-

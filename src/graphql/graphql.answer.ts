@@ -1,5 +1,5 @@
 export class GraphqlQueryAnswer {
-    data?: string;
-    message?: object;
+    data: any
+    message?: object
     response?: object
 }

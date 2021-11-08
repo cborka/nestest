@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 
-import {JokeEntity} from "./joke.entity";
-import {JokeInput} from "./joke.input";
+import { JokeEntity } from './joke.entity'
+import { JokeInput } from './joke.input'
 
 @Injectable()
 export class JokesService {
@@ -20,7 +20,7 @@ export class JokesService {
             rate: jokeInput.rate,
             like: jokeInput.like,
             view: jokeInput.view,
-            userId: jokeInput.userId
+            userId: jokeInput.userId,
         })
     }
 
@@ -29,4 +29,16 @@ export class JokesService {
         return this.jokesRepository.find()
     }
 
+    /**
+     * Get records for the specified userId
+     *
+     * @param userId
+     */
+    async findJokesByUserId(userId: string): Promise<JokeEntity[]> {
+        return await this.jokesRepository
+            .createQueryBuilder('jokes')
+            .where('jokes.userId = :userId', { userId: userId })
+            .withDeleted()
+            .getMany()
+    }
 }
