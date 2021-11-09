@@ -1,42 +1,46 @@
 import {
     Args,
     Mutation,
-    Parent,
-    Query,
-    ResolveField,
+    // Parent,
+     Query,
+    // ResolveField,
 //    Mutation,
 //    ResolveField,
     Resolver,
 } from '@nestjs/graphql'
 
-import {LevelEntity} from "./level.entity";
+//import {LevelEntity} from "./level.entity";
 import {LevelsService} from "./levels.service";
-import {GroupsService} from "../groups/groups.service";
-import {GroupEntity} from "../groups/group.entity";
+// import {GroupsService} from "../groups/groups.service";
+// import {GroupEntity} from "../groups/group.entity";
 import {LevelInput} from "./level.input";
+//import {LevelDto} from './level.dto';
+import {Level} from "./level.schema";
 
 
-@Resolver(() =>LevelEntity)
+@Resolver(() =>Level)
 export class LevelsResolver {
     constructor(
         private levelsService: LevelsService,
-        private groupsService: GroupsService,
+//        private groupsService: GroupsService,
     ) {}
 
-    @Query((levels) => [LevelEntity])
-    async levels(): Promise<LevelEntity[]> {
+    @Query((levels) => [Level])
+    async levels(): Promise<Level[]> {
         return await this.levelsService.findAll()
     }
 
-    @ResolveField()
-    async group(@Parent() level: LevelEntity): Promise<GroupEntity | undefined> {
-        return this.groupsService.findOneByLevelId(level.id);
-    }
+    //
+    // @ResolveField()
+    // async group(@Parent() level: LevelEntity): Promise<GroupEntity | undefined> {
+    //     return this.groupsService.findOneByLevelId(level._id);
+    // }
+    //
 
-    @Mutation(() => LevelEntity)
-    async createLevel(
+    @Mutation(() => Level)
+    async createLevel2(
         @Args('input') input: LevelInput,
-    ): Promise<LevelEntity | any> {
-        return await this.levelsService.createLevel(input)
+    ): Promise<Level | any> {
+        return await this.levelsService.create(input)
     }
 }

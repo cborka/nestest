@@ -1,18 +1,26 @@
 import {Module} from "@nestjs/common";
-import {TypeOrmModule} from "@nestjs/typeorm";
+import { MongooseModule } from '@nestjs/mongoose';
 
-import {GroupEntity} from "./group.entity";
 import {GroupsService} from "./groups.service";
 import {GroupsResolver} from "./groups.resolver";
-import {LevelsService} from "../levels/levels.service";
-import {LevelEntity} from "../levels/level.entity";
-import {UsersService} from "../users/users.service";
-import {UserEntity} from "../users/user.entity";
-import {UserInGroupService} from "../userInGroup/userInGroup.service";
-import {UserInGroupEntity} from "../userInGroup/userInGroup.entity";
+
+// import {LevelsService} from "../levels/levels.service";
+// import {LevelEntity} from "../levels/level.entity";
+// import {UsersService} from "../users/users.service";
+// import {UserEntity} from "../users/user.entity";
+// import {UserInGroupService} from "../userInGroup/userInGroup.service";
+// import {UserInGroupEntity} from "../userInGroup/userInGroup.entity";
+import {Level, LevelSchema} from "../levels/level.schema";
+import {Group, GroupSchema} from "./group.schema";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([GroupEntity, LevelEntity, UserEntity, UserInGroupEntity])],
-    providers: [GroupsService, LevelsService, UsersService, UserInGroupService, GroupsResolver]
+    imports: [
+        MongooseModule.forFeature([
+            { name: Group.name, schema: GroupSchema },
+            { name: Level.name, schema: LevelSchema }
+        ])
+    ],
+    providers: [GroupsService, GroupsResolver]
+//    providers: [GroupsService, LevelsService, UsersService, UserInGroupService, GroupsResolver, LevelEntity]
 })
 export class GroupsModule {}
