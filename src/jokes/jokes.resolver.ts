@@ -1,8 +1,39 @@
-// import {
-//     Args,
-//     Mutation,
-//     Parent,
-//     Query,
+import {
+    Args,
+    Mutation,
+    Query,
+    Resolver,
+} from '@nestjs/graphql'
+
+import {JokesService} from "./jokes.service";
+import {JokeInput} from "./joke.input";
+import {Joke} from "./joke.schema";
+
+
+@Resolver(() =>Joke)
+export class JokesResolver {
+    constructor(
+        private jokesService: JokesService,
+        //        private groupsService: GroupsService,
+    ) {}
+
+    @Query((jokes) => [Joke])
+    async jokes(): Promise<Joke[]> {
+        return await this.jokesService.findAll()
+    }
+
+//     @ResolveField()
+//     async users(@Parent() joke: JokeEntity): Promise<UserEntity[]> {
+//         return this.usersService.findByJokeId(joke.id);
+//     }
+
+    @Mutation(() => Joke)
+    async createJoke(
+        @Args('input') input: JokeInput,
+    ): Promise<Joke | any> {
+        return await this.jokesService.create(input)
+    }
+}
 //     ResolveField,
 //     Resolver,
 // } from '@nestjs/graphql'

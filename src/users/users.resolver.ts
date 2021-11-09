@@ -1,3 +1,39 @@
+import {
+    Args,
+    Mutation,
+    Query,
+    Resolver,
+} from '@nestjs/graphql'
+
+import {UsersService} from "./users.service";
+import {UserInput} from "./user.input";
+import {User} from "./user.schema";
+
+
+@Resolver(() =>User)
+export class UsersResolver {
+    constructor(
+        private usersService: UsersService,
+        //        private groupsService: GroupsService,
+    ) {}
+
+    @Query((users) => [User])
+    async users(): Promise<User[]> {
+        return await this.usersService.findAll()
+    }
+
+//     @ResolveField()
+//     async users(@Parent() user: UserEntity): Promise<UserEntity[]> {
+//         return this.usersService.findByUserId(user.id);
+//     }
+
+    @Mutation(() => User)
+    async createUser(
+        @Args('input') input: UserInput,
+    ): Promise<User | any> {
+        return await this.usersService.create(input)
+    }
+}
 // //import { NotFoundException } from '@nestjs/common'
 // import {
 //     Args,

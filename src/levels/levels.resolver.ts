@@ -30,7 +30,7 @@ export class LevelsResolver {
     //
 
     @Mutation(() => Level)
-    async createLevel2(
+    async createLevel(
         @Args('input') input: LevelInput,
     ): Promise<Level | any> {
         return await this.levelsService.create(input)

@@ -6,7 +6,7 @@ import {Level} from '../levels/level.schema';
 
 export type GroupDocument = Group & Document;
 
-export const GROUP_COLLECTION_NAME = 'role'
+export const GROUP_COLLECTION_NAME = 'group'
 
 @Schema({ collection: GROUP_COLLECTION_NAME })
 @ObjectType({ description: 'group' })

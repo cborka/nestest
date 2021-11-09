@@ -6,12 +6,12 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { config } from './config/config'
 import { mongooseConfig } from './config/mongoose.config'
 
-// import { UsersModule } from './users/users.module'
-// import { StatusesModule } from './statuses/statuses.module'
-// import { JokesModule } from './jokes/jokes.module'
+import { UsersModule } from './users/users.module'
+import { StatusesModule } from './statuses/statuses.module'
+import { JokesModule } from './jokes/jokes.module'
 import {GroupsModule} from "./groups/groups.module";
 import {LevelsModule} from "./levels/levels.module";
-// import {RolesModule} from "./roles/roles.module";
+import {RolesModule} from "./roles/roles.module";
 // import {UserInGroupModule} from "./userInGroup/userInGroup.module";
 
 @Module({
@@ -22,12 +22,12 @@ import {LevelsModule} from "./levels/levels.module";
             //            installSubscriptionHandlers: true,
             autoSchemaFile: 'schema.gql',
         }),
-        // UsersModule,
-        // StatusesModule,
-        // JokesModule,
-         GroupsModule,
-         LevelsModule,
-        // RolesModule,
+        UsersModule,
+        StatusesModule,
+        JokesModule,
+        GroupsModule,
+        LevelsModule,
+        RolesModule,
         // UserInGroupModule,
 
     ],

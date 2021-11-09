@@ -1,3 +1,27 @@
+import { Injectable } from '@nestjs/common'
+import {Model} from "mongoose";
+import { InjectModel } from '@nestjs/mongoose';
+
+import {JokeInput} from "./joke.input";
+import { Joke, JokeDocument } from './joke.schema';
+
+@Injectable()
+export class JokesService {
+    constructor(
+        @InjectModel(Joke.name) private JokeModel: Model<JokeDocument>
+    ) {
+    }
+
+
+    async create(jokeInput: JokeInput): Promise<Joke> {
+        const createdJoke = new this.JokeModel(jokeInput);
+        return createdJoke.save();
+    }
+
+    async findAll(): Promise<Joke[]> {
+        return this.JokeModel.find().exec();
+    }
+}
 // import { Injectable } from '@nestjs/common'
 // import { InjectRepository } from '@nestjs/typeorm'
 // import { Repository } from 'typeorm'

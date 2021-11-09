@@ -1,6 +1,6 @@
 /*
-Здесь я делал функции обращения к конкретным данным
-и хотел сделать функцию занесения всё схемы, но не успел.
+Здесь пока всё для Postgres,
+Переделаю для mongo когда будет готов mongo-gql сервер
  */
 import { GraphqlService } from '../graphql/graphql.service'
 import { GraphqlQuery } from '../graphql/graphql.query'

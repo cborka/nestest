@@ -2,8 +2,6 @@ import { Field, InputType } from '@nestjs/graphql'
 
 @InputType()
 export class JokeInput {
-    @Field()
-    id: string
 
     @Field()
     name: string
@@ -22,5 +20,4 @@ export class JokeInput {
 
     @Field()
     userId: string
-
 }

@@ -1,3 +1,28 @@
+import { Injectable } from '@nestjs/common'
+import {Model} from "mongoose";
+import { InjectModel } from '@nestjs/mongoose';
+
+import {UserInput} from "./user.input";
+import { User, UserDocument } from './user.schema';
+
+@Injectable()
+export class UsersService {
+    constructor(
+        @InjectModel(User.name) private UserModel: Model<UserDocument>
+    ) {}
+
+
+    async create(userInput: UserInput): Promise<User> {
+        const createdUser = new this.UserModel(userInput);
+        return createdUser.save();
+    }
+
+    async findAll(): Promise<User[]> {
+        return this.UserModel.find().exec();
+    }
+
+
+}
 // import { Injectable } from '@nestjs/common'
 // import { InjectRepository } from '@nestjs/typeorm'
 // import { Repository } from 'typeorm'
@@ -52,7 +77,7 @@
 //      *
 //      * @param roleId
 //      */
-//     async findByRoleId(roleId: string): Promise<UserEntity[]> {
+//     async findByUserId(roleId: string): Promise<UserEntity[]> {
 //         return await this.usersRepository
 //             .createQueryBuilder('user')
 //             .where('user.roleId = :roleId', { roleId: roleId })
@@ -91,4 +116,3 @@
 //             .withDeleted()
 //             .getOneOrFail()
 //     }
-// }

@@ -1,16 +1,15 @@
 import { Module } from '@nestjs/common'
-// import { TypeOrmModule } from '@nestjs/typeorm'
-//
-// import {StatusesService } from './statuses.service'
-// import { StatusEntity } from './status.entity'
-// import { StatusesResolver } from './statuses.resolver'
-// import {UserEntity} from "../users/user.entity";
-// import {UsersService} from "../users/users.service";
+import { MongooseModule } from '@nestjs/mongoose';
+
+import {Status, StatusSchema} from "./status.schema"
+import {StatusesService} from "./statuses.service";
+import {StatusesResolver} from "./statuses.resolver";
 
 @Module({
-    // imports: [TypeOrmModule.forFeature([StatusEntity, UserEntity])],
-    // controllers: [],
-    // providers: [StatusesService, UsersService, StatusesResolver],
+    imports: [
+        MongooseModule.forFeature([{ name: Status.name, schema: StatusSchema }])
+    ],
+    providers: [StatusesService, StatusesResolver],
     // exports: [],
 })
 export class StatusesModule {}

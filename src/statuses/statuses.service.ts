@@ -1,3 +1,26 @@
+import { Injectable } from '@nestjs/common'
+import {Model} from "mongoose";
+import { InjectModel } from '@nestjs/mongoose';
+
+import {StatusInput} from "./status.input";
+import { Status, StatusDocument } from './status.schema';
+
+@Injectable()
+export class StatusesService {
+    constructor(
+        @InjectModel(Status.name) private StatusModel: Model<StatusDocument>
+    ) {}
+
+
+    async create(statusInput: StatusInput): Promise<Status> {
+        const createdStatus = new this.StatusModel(statusInput);
+        return createdStatus.save();
+    }
+
+    async findAll(): Promise<Status[]> {
+        return this.StatusModel.find().exec();
+    }
+
 // import { Injectable } from '@nestjs/common'
 // import { InjectRepository } from '@nestjs/typeorm'
 // import { Repository } from 'typeorm'
@@ -42,4 +65,4 @@
 //             .withDeleted()
 //             .getOneOrFail()
 //     }
-// }
+}
