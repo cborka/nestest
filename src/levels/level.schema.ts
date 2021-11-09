@@ -4,7 +4,9 @@ import { Document } from 'mongoose';
 
 export type LevelDocument = Level & Document;
 
-@Schema()
+export const LEVEL_COLLECTION_NAME = 'role'
+
+@Schema({ collection: LEVEL_COLLECTION_NAME })
 @ObjectType({ description: 'level' })
 export class Level {
 

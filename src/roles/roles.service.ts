@@ -1,3 +1,27 @@
+import { Injectable } from '@nestjs/common'
+import {Model} from "mongoose";
+import { InjectModel } from '@nestjs/mongoose';
+
+import {RoleInput} from "./role.input";
+import { Role, RoleDocument } from './role.schema';
+
+@Injectable()
+export class RolesService {
+    constructor(
+        @InjectModel(Role.name) private RoleModel: Model<RoleDocument>
+    ) {}
+
+
+    async create(roleInput: RoleInput): Promise<Role> {
+        const createdRole = new this.RoleModel(roleInput);
+        return createdRole.save();
+    }
+
+    async findAll(): Promise<Role[]> {
+        return this.RoleModel.find().exec();
+    }
+    
+    
 // import { Injectable } from '@nestjs/common'
 // import { InjectRepository } from '@nestjs/typeorm'
 // import { Repository } from 'typeorm'
@@ -46,4 +70,4 @@
 //             .getOneOrFail()
 //     }
 //
-// }
+}

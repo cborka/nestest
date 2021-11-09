@@ -1,10 +1,14 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import {Document, Types} from 'mongoose';
+
+import {Level} from '../levels/level.schema';
 
 export type GroupDocument = Group & Document;
 
-@Schema()
+export const GROUP_COLLECTION_NAME = 'role'
+
+@Schema({ collection: GROUP_COLLECTION_NAME })
 @ObjectType({ description: 'group' })
 export class Group {
 
@@ -22,6 +26,9 @@ export class Group {
     @Field()
     @Prop()
     levelId: string
+
+    @Prop({ type: Types.ObjectId, required: false, ref: 'Level' })
+    level: Level
 }
 
 export const GroupSchema = SchemaFactory.createForClass(Group);

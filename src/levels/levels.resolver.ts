@@ -1,20 +1,12 @@
 import {
     Args,
     Mutation,
-    // Parent,
-     Query,
-    // ResolveField,
-//    Mutation,
-//    ResolveField,
+    Query,
     Resolver,
 } from '@nestjs/graphql'
 
-//import {LevelEntity} from "./level.entity";
 import {LevelsService} from "./levels.service";
-// import {GroupsService} from "../groups/groups.service";
-// import {GroupEntity} from "../groups/group.entity";
 import {LevelInput} from "./level.input";
-//import {LevelDto} from './level.dto';
 import {Level} from "./level.schema";
 
 
