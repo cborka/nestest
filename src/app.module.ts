@@ -19,7 +19,6 @@ import {RolesModule} from "./roles/roles.module";
         ConfigModule.forRoot(config),
         MongooseModule.forRootAsync(mongooseConfig),
         GraphQLModule.forRoot({
-            //            installSubscriptionHandlers: true,
             autoSchemaFile: 'schema.gql',
         }),
         UsersModule,

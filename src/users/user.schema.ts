@@ -2,7 +2,6 @@ import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import {Document} from 'mongoose';
 //import {Document, Types} from 'mongoose';
-//import {User} from "../users/user.schema";
 
 export type UserDocument = User & Document;
 
