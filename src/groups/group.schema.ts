@@ -6,13 +6,13 @@ import {Level} from '../levels/level.schema';
 
 export type GroupDocument = Group & Document;
 
-export const GROUP_COLLECTION_NAME = 'group'
+export const GROUPS_COLLECTION_NAME = 'groups'
 
-@Schema({ collection: GROUP_COLLECTION_NAME })
+@Schema({ collection: GROUPS_COLLECTION_NAME })
 @ObjectType({ description: 'group' })
 export class Group {
 
-    @Field((type) => ID)
+    @Field((type) => ID, {name: "id"})
     _id: string;
 
     @Field()
@@ -27,6 +27,7 @@ export class Group {
     @Prop()
     levelId: string
 
+    @Field(type => Level, {nullable: true})
     @Prop({ type: Types.ObjectId, required: false, ref: 'Level' })
     level: Level
 }

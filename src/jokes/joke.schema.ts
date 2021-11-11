@@ -1,18 +1,18 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import {Document} from 'mongoose';
-//import {Document, Types} from 'mongoose';
-//import {User} from "../users/user.schema";
+import {Document, Types} from 'mongoose';
+
+import {User} from "../users/user.schema";
 
 export type JokeDocument = Joke & Document;
 
-export const JOKE_COLLECTION_NAME = 'joke'
+export const JOKES_COLLECTION_NAME = 'jokes'
 
-@Schema({ collection: JOKE_COLLECTION_NAME })
+@Schema({ collection: JOKES_COLLECTION_NAME })
 @ObjectType({ description: "Joke" })
 export class Joke {
 
-    @Field((type) => ID)
+    @Field((type) => ID, {name: "id"})
     _id: string;
 
     @Field()
@@ -35,8 +35,14 @@ export class Joke {
     @Prop()
     view: string;
 
-    // @Prop({ type: Types.ObjectId, required: false, ref: 'User' })
-    // level: User[]
+    @Field()
+    @Prop()
+    userId: string
+
+    @Field(type => User, {nullable: true})
+    @Prop({ type: Types.ObjectId, required: false, ref: 'User' })
+    user: User
+
 
 }
 export const JokeSchema = SchemaFactory.createForClass(Joke);

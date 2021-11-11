@@ -8,19 +8,34 @@ import { Joke, JokeDocument } from './joke.schema';
 @Injectable()
 export class JokesService {
     constructor(
-        @InjectModel(Joke.name) private JokeModel: Model<JokeDocument>
+        @InjectModel(Joke.name) private jokeModel: Model<JokeDocument>
     ) {
     }
 
 
     async create(jokeInput: JokeInput): Promise<Joke> {
-        const createdJoke = new this.JokeModel(jokeInput);
+        const createdJoke = new this.jokeModel(jokeInput);
         return createdJoke.save();
     }
 
     async findAll(): Promise<Joke[]> {
-        return this.JokeModel.find().exec();
+        return this.jokeModel.find().exec();
     }
+
+
+    /**
+     * Get records for the specified userId
+     *
+     * @param userId
+     */
+    async findJokesByUserId(userId: string): Promise<Joke[]> {
+        return await this.jokeModel.find({userId: userId}).exec()
+    }
+
+
+
+
+
 }
 // import { Injectable } from '@nestjs/common'
 // import { InjectRepository } from '@nestjs/typeorm'

@@ -8,20 +8,24 @@ import { Role, RoleDocument } from './role.schema';
 @Injectable()
 export class RolesService {
     constructor(
-        @InjectModel(Role.name) private RoleModel: Model<RoleDocument>
+        @InjectModel(Role.name) private roleModel: Model<RoleDocument>
     ) {}
 
-
     async create(roleInput: RoleInput): Promise<Role> {
-        const createdRole = new this.RoleModel(roleInput);
+        const createdRole = new this.roleModel(roleInput);
         return createdRole.save();
     }
 
     async findAll(): Promise<Role[]> {
-        return this.RoleModel.find().exec();
+        return this.roleModel.find().exec();
     }
-    
-    
+
+    //Получить одну запись по id
+    async findOneById(id: string | undefined): Promise<Role | null> {
+        return await this.roleModel.findOne({_id: id}).exec()
+    }
+
+
 // import { Injectable } from '@nestjs/common'
 // import { InjectRepository } from '@nestjs/typeorm'
 // import { Repository } from 'typeorm'

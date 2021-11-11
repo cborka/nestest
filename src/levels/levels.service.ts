@@ -13,7 +13,7 @@ export class LevelsService {
     ) {}
 
 
-    async create(levelInput: LevelInput): Promise<Level> {
+    async createLevel(levelInput: LevelInput): Promise<Level> {
         const createdLevel = new this.levelModel(levelInput);
         return createdLevel.save();
     }
@@ -21,22 +21,10 @@ export class LevelsService {
     async findAll(): Promise<Level[]> {
         return this.levelModel.find().exec();
     }
-    // // Создание новой записи
-    // async createLevel(levelInput: LevelInput): Promise<LevelEntity> {
-    //     return await this.levelsRepository.save({
-    //         name: levelInput.name
-    //     })
-    // }
-    //
-    // // Получить все записи
-    // findAll(): Promise<LevelEntity[]> {
-    //     return this.levelsRepository.find()
-    // }
-    //
-    // // Получить одну запись по id
-    // findOneById(id: string): Promise<LevelEntity | undefined> {
-    //     return this.levelsRepository.findOne(id)
-    // }
-    //
+
+    // Получить одну запись по id
+    async findOneById(id: string | undefined): Promise<Level | undefined | null> {
+        return await this.levelModel.findOne({_id: id}).exec()
+    }
 
 }

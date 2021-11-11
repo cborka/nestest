@@ -1,20 +1,31 @@
 import {
     Args,
     Mutation,
+    Parent,
     Query,
+    ResolveField,
     Resolver,
 } from '@nestjs/graphql'
 
 import {UsersService} from "./users.service";
 import {UserInput} from "./user.input";
 import {User} from "./user.schema";
+import {RolesService} from "../roles/roles.service";
+import {StatusesService} from "../statuses/statuses.service";
+import {Status} from "../statuses/status.schema";
+import {Role} from "../roles/role.schema";
+import {Joke} from "../jokes/joke.schema";
+import {JokesService} from "../jokes/jokes.service";
 
 
 @Resolver(() =>User)
 export class UsersResolver {
     constructor(
         private usersService: UsersService,
-        //        private groupsService: GroupsService,
+        private rolesService: RolesService,
+        private statusesService: StatusesService,
+        private jokesService: JokesService,
+        //private groupsService: GroupsService,
     ) {}
 
     @Query((users) => [User])
@@ -22,10 +33,23 @@ export class UsersResolver {
         return await this.usersService.findAll()
     }
 
-//     @ResolveField()
-//     async users(@Parent() user: UserEntity): Promise<UserEntity[]> {
-//         return this.usersService.findByUserId(user.id);
-//     }
+
+    @ResolveField()
+    async status(@Parent() user: User): Promise<Status | null> {
+        return this.statusesService.findOneById(user.statusId)
+    }
+
+    @ResolveField()
+    async role(@Parent() user: User): Promise<Role | null> {
+        return this.rolesService.findOneById(user.roleId)
+    }
+
+    @ResolveField()
+    async jokes(@Parent() user: User): Promise<Joke[]> {
+        return this.jokesService.findJokesByUserId(user._id);
+    }
+
+
 
     @Mutation(() => User)
     async createUser(
@@ -67,15 +91,6 @@ export class UsersResolver {
 //         return await this.usersService.findAll()
 //     }
 //
-//     @ResolveField()
-//     async status(@Parent() user: UserEntity) {
-//         return this.statusesService.findOneById(user.statusId)
-//     }
-//
-//     @ResolveField()
-//     async role(@Parent() user: UserEntity) {
-//         return this.rolesService.findOneById(user.roleId)
-//     }
 //
 //     @ResolveField()
 //     async groups(@Parent() user: UserEntity) {

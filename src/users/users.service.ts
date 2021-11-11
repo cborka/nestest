@@ -11,7 +11,6 @@ export class UsersService {
         @InjectModel(User.name) private userModel: Model<UserDocument>
     ) {}
 
-
     async create(userInput: UserInput): Promise<User> {
         const createdUser = new this.userModel(userInput);
         return createdUser.save();
@@ -19,6 +18,30 @@ export class UsersService {
 
     async findAll(): Promise<User[]> {
         return this.userModel.find().exec();
+    }
+
+    //Получить одну запись по id
+    async findOneById(id: string | undefined): Promise<User | null> {
+        return await this.userModel.findOne({_id: id}).exec()
+    }
+
+
+    /**
+     * Get records for the specified roleId
+     *
+     * @param roleId
+     */
+    async findByRoleId(roleId: string): Promise<User[]> {
+        return await this.userModel.find({roleId: roleId}).exec()
+    }
+
+    /**
+     * Get records for the specified statusId
+     *
+     * @param statusId
+     */
+    async findByStatusId(statusId: string): Promise<User[]> {
+        return await this.userModel.find({statusId: statusId}).exec()
     }
 
 
@@ -37,52 +60,10 @@ export class UsersService {
 //         private readonly usersRepository: Repository<UserEntity>,
 //     ) {}
 //
-//     // Создание новой записи
-//     async createUser(userInput: UserInput): Promise<UserEntity> {
-//         return await this.usersRepository.save({
-//             name: userInput.name,
-//             surName: userInput.surName,
-//             login: userInput.login,
-//             password: userInput.password,
-//             statusId: userInput.statusId,
-//             roleId: userInput.roleId,
-//         })
-//     }
-//
-//     // Получить все записи
-//     findAll(): Promise<UserEntity[]> {
-//         return this.usersRepository.find()
-//     }
 //
 //     // Получить одну запись по id
 //     findOneById(id: string): Promise<UserEntity | undefined> {
 //         return this.usersRepository.findOne(id)
-//     }
-//
-//     /**
-//      * Get records for the specified statusId
-//      *
-//      * @param statusId
-//      */
-//     async findByStatusId(statusId: string): Promise<UserEntity[]> {
-//         return await this.usersRepository
-//             .createQueryBuilder('user')
-//             .where('user.statusId = :statusId', { statusId: statusId })
-//             .withDeleted()
-//             .getMany()
-//     }
-//
-//     /**
-//      * Get records for the specified roleId
-//      *
-//      * @param roleId
-//      */
-//     async findByUserId(roleId: string): Promise<UserEntity[]> {
-//         return await this.usersRepository
-//             .createQueryBuilder('user')
-//             .where('user.roleId = :roleId', { roleId: roleId })
-//             .withDeleted()
-//             .getMany()
 //     }
 //
 //     /**

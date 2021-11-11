@@ -1,17 +1,20 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import {Document} from 'mongoose';
-//import {Document, Types} from 'mongoose';
+import {Document, Types} from 'mongoose';
+
+import {Role} from "../roles/role.schema";
+import {Status} from "../statuses/status.schema";
+import {Joke} from "../jokes/joke.schema";
 
 export type UserDocument = User & Document;
 
-export const USER_COLLECTION_NAME = 'user'
+export const USERS_COLLECTION_NAME = 'users'
 
-@Schema({ collection: USER_COLLECTION_NAME, timestamps: { createdAt: 'createdAt', updatedAt: false } })
+@Schema({ collection: USERS_COLLECTION_NAME, timestamps: { createdAt: 'createdAt', updatedAt: false } })
 @ObjectType({ description: "User" })
 export class User {
 
-    @Field((type) => ID)
+    @Field((type) => ID, {name: "id"})
     _id: string;
 
     @Field()
@@ -20,7 +23,7 @@ export class User {
 
     @Field()
     @Prop()
-    sudName: string;
+    surName: string;
 
     @Field()
     @Prop()
@@ -31,10 +34,26 @@ export class User {
     password: string;
 
     @Prop({ required: false })
-    createdAt: number
+    createdAt?: number
 
-    // @Prop({ type: Types.ObjectId, required: false, ref: 'User' })
-    // level: User[]
+    @Field({nullable: true})
+    @Prop()
+    roleId: string
+
+    @Field()
+    @Prop()
+    statusId: string
+
+    @Field(type => Role, {nullable: true})
+    @Prop({ type: Types.ObjectId, required: false, ref: 'Role' })
+    role: Role
+
+    @Field(type => Status, {nullable: true})
+    @Prop({ type: Types.ObjectId, required: false, ref: 'Status' })
+    status: Status
+
+    @Field(type => [Joke])
+    jokes: Joke[]
 
 }
 export const UserSchema = SchemaFactory.createForClass(User);

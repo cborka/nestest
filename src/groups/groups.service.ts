@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import {GroupInput} from "./group.input";
 import { Group, GroupDocument } from './group.schema';
+//import {Level} from "../levels/level.schema";
 
 @Injectable()
 export class GroupsService {
@@ -30,19 +31,15 @@ export class GroupsService {
     //     })
     // }
     //
-    // /**
-    //  * Get record for the specified levelId
-    //  *
-    //  * @param levelId
-    //  */
-    // async findOneByLevelId(levelId: string): Promise<GroupEntity | undefined> {
-    //     return await this.groupsRepository
-    //         .createQueryBuilder('group')
-    //         .where('group.levelId = :levelId', { levelId: levelId })
-    //         .withDeleted()
-    //         .getOneOrFail()
-    // }
-    //
+    /**
+     * Get record for the specified levelId
+     *
+     * @param levelId
+     */
+    async findOneByLevelId(levelId: string): Promise<Group | null> {
+        return await this.groupModel.findOne({levelId: levelId}).exec()
+    }
+
     // /**
     //  * Get records for the specified userId
     //  *

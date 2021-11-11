@@ -12,6 +12,7 @@ import {GroupsResolver} from "./groups.resolver";
 // import {UserInGroupEntity} from "../userInGroup/userInGroup.entity";
 import {Level, LevelSchema} from "../levels/level.schema";
 import {Group, GroupSchema} from "./group.schema";
+import {LevelsService} from "../levels/levels.service";
 
 @Module({
     imports: [
@@ -20,7 +21,7 @@ import {Group, GroupSchema} from "./group.schema";
             { name: Level.name, schema: LevelSchema }
         ])
     ],
-    providers: [GroupsService, GroupsResolver]
+    providers: [GroupsService, GroupsResolver, LevelsService]
 //    providers: [GroupsService, LevelsService, UsersService, UserInGroupService, GroupsResolver, LevelEntity]
 })
 export class GroupsModule {}

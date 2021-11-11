@@ -5,12 +5,18 @@ import {Joke, JokeSchema} from "./joke.schema"
 
 import {JokesService} from "./jokes.service";
 import {JokesResolver} from "./jokes.resolver";
+import {User, UserSchema} from "../users/user.schema";
+import {UsersService} from "../users/users.service";
 
 @Module({
     imports: [
-        MongooseModule.forFeature([{ name: Joke.name, schema: JokeSchema }])
+        MongooseModule.forFeature([
+            { name: Joke.name, schema: JokeSchema },
+            { name: User.name, schema: UserSchema },
+
+        ])
     ],
-    providers: [JokesService, JokesResolver]
+    providers: [JokesService, JokesResolver, UsersService]
     // controllers: [],
     // exports: [],
 })

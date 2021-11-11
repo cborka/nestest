@@ -2,19 +2,21 @@ import {Module} from "@nestjs/common";
 import { MongooseModule } from '@nestjs/mongoose';
 
 import {LevelsService} from "./levels.service";
-// import {LevelEntity} from "./level.entity";
-// import {GroupEntity} from "../groups/group.entity";
-//import {GroupsService} from "../groups/groups.service";
-
 import {LevelsResolver} from "./levels.resolver";
-
 import {Level, LevelSchema} from "./level.schema";
+
+import {GroupsService} from "../groups/groups.service";
+import {GroupsModule} from "../groups/groups.module";
+import {Group, GroupSchema} from "../groups/group.schema";
 
 @Module({
     imports: [
-        MongooseModule.forFeature([{ name: Level.name, schema: LevelSchema }])
+        MongooseModule.forFeature([
+            { name: Level.name, schema: LevelSchema },
+            { name: Group.name, schema: GroupSchema }
+            ]),
+        GroupsModule
     ],
-    providers: [LevelsService, LevelsResolver]
-//    providers: [GroupsService, LevelsService, LevelsResolver]
+    providers: [LevelsService, LevelsResolver, GroupsService]
 })
 export class LevelsModule {}

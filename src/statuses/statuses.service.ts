@@ -8,17 +8,21 @@ import { Status, StatusDocument } from './status.schema';
 @Injectable()
 export class StatusesService {
     constructor(
-        @InjectModel(Status.name) private StatusModel: Model<StatusDocument>
+        @InjectModel(Status.name) private statusModel: Model<StatusDocument>
     ) {}
 
-
     async create(statusInput: StatusInput): Promise<Status> {
-        const createdStatus = new this.StatusModel(statusInput);
+        const createdStatus = new this.statusModel(statusInput);
         return createdStatus.save();
     }
 
     async findAll(): Promise<Status[]> {
-        return this.StatusModel.find().exec();
+        return this.statusModel.find().exec();
+    }
+
+    //Получить одну запись по id
+    async findOneById(id: string | undefined): Promise<Status | null> {
+        return await this.statusModel.findOne({_id: id}).exec()
     }
 
 // import { Injectable } from '@nestjs/common'
