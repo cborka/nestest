@@ -1,18 +1,24 @@
 import { Module } from '@nestjs/common'
-// import { TypeOrmModule } from '@nestjs/typeorm'
-//
-// import {GroupsService} from "../groups/groups.service";
-// import {GroupEntity} from "../groups/group.entity";
-// import {UserInGroupService} from "./userInGroup.service";
-// import {UserInGroupResolver} from "./userInGroup.resolver";
-// import {UserEntity} from "../users/user.entity";
-// import {UsersService} from "../users/users.service";
-// import {UserInGroupEntity} from "./userInGroup.entity";
+import { MongooseModule } from '@nestjs/mongoose';
+
+import {UserInGroup, UserInGroupSchema} from "./userInGroup.schema";
+import {Group, GroupSchema} from "../groups/group.schema";
+import {User, UserSchema} from "../users/user.schema";
+import {GroupsService} from "../groups/groups.service";
+import {UsersService} from "../users/users.service";
+import {UserInGroupResolver} from "./userInGroup.resolver";
+import {UserInGroupService} from "./userInGroup.service";
 
 @Module({
-//    imports: [TypeOrmModule.forFeature([UserInGroupEntity, UserEntity, GroupEntity])],
+    imports: [
+        MongooseModule.forFeature([
+            { name: UserInGroup.name, schema: UserInGroupSchema },
+            { name: User.name, schema: UserSchema },
+            { name: Group.name, schema: GroupSchema },
+        ])
+    ],
+    providers: [UserInGroupService, UserInGroupResolver, GroupsService, UsersService],
     controllers: [],
-//    providers: [UserInGroupService, UsersService, GroupsService, UserInGroupResolver],
     exports: [],
 })
 export class UserInGroupModule {}

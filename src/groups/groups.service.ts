@@ -4,7 +4,6 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import {GroupInput} from "./group.input";
 import { Group, GroupDocument } from './group.schema';
-//import {Level} from "../levels/level.schema";
 
 @Injectable()
 export class GroupsService {
@@ -20,6 +19,12 @@ export class GroupsService {
     async findAll(): Promise<Group[]> {
         return this.groupModel.find().exec();
     }
+
+    //Получить одну запись по id
+    async findOneById(id: string | undefined): Promise<Group | null> {
+        return await this.groupModel.findOne({_id: id}).exec()
+    }
+
 
 
     // // Создание новой записи

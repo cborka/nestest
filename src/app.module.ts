@@ -12,6 +12,8 @@ import { JokesModule } from './jokes/jokes.module'
 import {GroupsModule} from "./groups/groups.module";
 import {LevelsModule} from "./levels/levels.module";
 import {RolesModule} from "./roles/roles.module";
+import {UserInGroupModule} from './userInGroup/userInGroup.module'
+
 // import {UserInGroupModule} from "./userInGroup/userInGroup.module";
 
 @Module({
@@ -27,7 +29,7 @@ import {RolesModule} from "./roles/roles.module";
         GroupsModule,
         LevelsModule,
         RolesModule,
-        // UserInGroupModule,
+        UserInGroupModule,
 
     ],
 })

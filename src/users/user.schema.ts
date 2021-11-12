@@ -5,6 +5,7 @@ import {Document, Types} from 'mongoose';
 import {Role} from "../roles/role.schema";
 import {Status} from "../statuses/status.schema";
 import {Joke} from "../jokes/joke.schema";
+import {Group} from "../groups/group.schema";
 
 export type UserDocument = User & Document;
 
@@ -54,6 +55,10 @@ export class User {
 
     @Field(type => [Joke])
     jokes: Joke[]
+
+    @Field(type => [Group])
+    @Prop({ type: Types.ObjectId, required: false, ref: 'Group' })
+    groups: Group[]
 
 }
 export const UserSchema = SchemaFactory.createForClass(User);

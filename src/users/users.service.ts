@@ -25,7 +25,6 @@ export class UsersService {
         return await this.userModel.findOne({_id: id}).exec()
     }
 
-
     /**
      * Get records for the specified roleId
      *
@@ -43,6 +42,8 @@ export class UsersService {
     async findByStatusId(statusId: string): Promise<User[]> {
         return await this.userModel.find({statusId: statusId}).exec()
     }
+
+
 
 
 }
