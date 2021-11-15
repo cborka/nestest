@@ -53,8 +53,8 @@ export class UsersResolver {
     }
 
     @ResolveField()
-    async groups(@Parent() user: User): Promise<Group[] | any> {
-        return this.userInGroupService.findGroupsByUserId(user._id);
+    async groups(@Parent() user: User): Promise<Group[]> {
+        return await this.userInGroupService.findGroupsByUserId(user._id);
     }
 
 

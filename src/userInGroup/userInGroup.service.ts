@@ -29,9 +29,9 @@ export class UserInGroupService {
     //
 //    async findGroupsByUserId(userId: string): Promise<UserInGroup[]> {
     async findGroupsByUserId(userId: string): Promise<Group[]> {
-        let rec = await this.userInGroupModel.find({userId: userId}).exec();
-        console.log("1: "+ userId)
-        console.log(rec)
+//        let rec = await this.userInGroupModel.find({userId: userId}).exec();
+//        console.log("1: "+ userId)
+//        console.log(rec)
          let rec2 = await this.userInGroupModel.aggregate(
               [
                   {
@@ -39,10 +39,29 @@ export class UserInGroupService {
                           from: "groups", // collection to join
                           localField: "groupId",//field from the input documents
                           foreignField: "_id",//field from the documents of the "from" collection
-                          as: "grps"// output array field
+                          as: "groups"// output array field
+                      }
+                  },
+//                  { $unwind: { path: "$groups", preserveNullAndEmptyArrays: true } },
+                  {
+                      $project: {
+                          "groups": "$groups",
+                          "name": "groups.name",
+                          "shortName": "$groups.shortName",
+                          "group_id": "$groups._id",
+                          "group_zzz": "$groups.zzz",
+
+                          //userInGroupModel
+                         "_id": "$_id",
+                         "userId": "userId",
+                         "groupId": "$groupId",
+                         "createdAt": "$createdAt",
+
                       }
                   }
-             //     {
+
+
+                  //     {
              //         $lookup: {
              //             from: "groups",
              //             localField: "groupId",
