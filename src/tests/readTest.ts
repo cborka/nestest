@@ -60,7 +60,6 @@ export class GraphqlTest {
             query: `
              mutation {
               createLevel(input: {
-                id: "0"
                 name: "${levelName}"
                 }) 
               {
@@ -77,7 +76,6 @@ export class GraphqlTest {
             query: `
              mutation {
               createStatus(input: {
-                id: "0"
                 name: "${statusName}"
                 }) 
               {
@@ -96,7 +94,6 @@ export class GraphqlTest {
             query: `
              mutation {
               createRole(input: {
-                id: "0"
                 name: "${roleName}"
                 }) 
               {
@@ -121,7 +118,6 @@ export class GraphqlTest {
             query: `
              mutation {
               createUser(input: { 
-                id: "0", 
                 name: "${userName}" 
                 surName: "${surName}"
                 login: "${login}"
@@ -150,7 +146,6 @@ export class GraphqlTest {
             query: `
             mutation {
               createJoke(input: { 
-                id: "0", 
                 name: "${jokeName}" 
                 text: "${text}"
                 rate: ${rate}
@@ -177,7 +172,6 @@ export class GraphqlTest {
              mutation {
               createGroup(
                 input: {
-                  id: "0"
                   name: "${groupName}"
                   shortName: "${groupShortName}"
                   levelId: "${levelId}"
@@ -213,7 +207,7 @@ export class GraphqlTest {
     }
 
     async addData1(): Promise<string> {
-        const sid = '15'
+        const sid = '17'
         let levelId: string
         let groupId: string
         let status1Id: string
@@ -287,6 +281,8 @@ export class GraphqlTest {
 
         userInGroup1 = await this.addUserInGroup(user1Id, groupId)
         userInGroup2 = await this.addUserInGroup(user2Id, groupId)
+
+         console.log('levelId' + levelId)
 
         console.log('role1Id' + role1Id)
         console.log('role2Id' + role2Id)

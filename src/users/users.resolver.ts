@@ -17,7 +17,8 @@ import {Role} from "../roles/role.schema";
 import {Joke} from "../jokes/joke.schema";
 import {JokesService} from "../jokes/jokes.service";
 import {Group} from '../groups/group.schema';
-import {UserInGroupService} from "../userInGroup/userInGroup.service";
+//import {UserInGroupService} from "../userInGroup/userInGroup.service";
+import {GroupsService} from "../groups/groups.service";
 
 
 @Resolver(() =>User)
@@ -27,8 +28,8 @@ export class UsersResolver {
         private rolesService: RolesService,
         private statusesService: StatusesService,
         private jokesService: JokesService,
-        private userInGroupService: UserInGroupService,
-        //private groupsService: GroupsService,
+//        private userInGroupService: UserInGroupService,
+        private groupsService: GroupsService,
     ) {}
 
     @Query((users) => [User])
@@ -54,7 +55,7 @@ export class UsersResolver {
 
     @ResolveField()
     async groups(@Parent() user: User): Promise<Group[]> {
-        return await this.userInGroupService.findGroupsByUserId(user._id);
+        return await this.groupsService.findGroupsByUserId(user._id);
     }
 
 

@@ -43,7 +43,23 @@ export class UsersService {
         return await this.userModel.find({statusId: statusId}).exec()
     }
 
-
+    async findUsersByGroupId(groupId: string): Promise<User[]> {
+        return await this.userModel.aggregate(
+            [
+                { "$addFields": { "uid": { "$toString": "$_id" }}},
+                {
+                    $lookup: {
+                        from: "user_in_groups",
+                        localField: "uid",
+                        foreignField: "userId",
+                        as: "userInGroup"
+                    }
+                },
+                { $unwind: { path: "$userInGroup", preserveNullAndEmptyArrays: true } },
+                { $match : { "userInGroup.groupId": await groupId.toString() } },
+            ]
+        ).exec();
+    }
 
 
 }

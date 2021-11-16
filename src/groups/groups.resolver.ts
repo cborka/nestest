@@ -19,13 +19,15 @@ import {Group} from "./group.schema";
 import {GroupsService} from "./groups.service";
 import {GroupInput} from "./group.input";
 import {Level} from "../levels/level.schema";
+import {User} from "../users/user.schema";
+import {UsersService} from "../users/users.service";
 
 @Resolver(() =>Group)
 export class GroupsResolver {
     constructor(
         private groupsService: GroupsService,
         private levelsService: LevelsService,
-//        private usersService: UsersService
+        private usersService: UsersService
     ) {}
 
     @Query((groups) => [Group])
@@ -37,6 +39,13 @@ export class GroupsResolver {
     async level(@Parent() group: Group): Promise<Level | undefined | null> {
         return this.levelsService.findOneById(group.levelId);
     }
+
+    @ResolveField()
+    async users(@Parent() group: Group): Promise<User[]> {
+        return await this.usersService.findUsersByGroupId(group._id);
+    }
+
+
 
     // @ResolveField()
     // async users(@Parent() group: GroupEntity) {

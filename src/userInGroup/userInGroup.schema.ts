@@ -16,8 +16,9 @@ export class UserInGroup {
     @Field((type) => ID, {name: "id"})
     _id: string;
 
+    @Field()
     @Prop({ required: false })
-    createdAt?: number
+    createdAt: number
 
     @Field()
     @Prop()

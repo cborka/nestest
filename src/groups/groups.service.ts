@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import {GroupInput} from "./group.input";
 import { Group, GroupDocument } from './group.schema';
 
+
 @Injectable()
 export class GroupsService {
     constructor(
@@ -26,16 +27,24 @@ export class GroupsService {
     }
 
 
+    async findGroupsByUserId(userId: string): Promise<Group[]> {
+        return await this.groupModel.aggregate(
+            [
+                { "$addFields": { "gid": { "$toString": "$_id" }}},
+                {
+                    $lookup: {
+                        from: "user_in_groups",
+                        localField: "gid",
+                        foreignField: "groupId",
+                        as: "userInGroup"
+                    }
+                },
+                { $unwind: { path: "$userInGroup", preserveNullAndEmptyArrays: true } },
+                { $match : { "userInGroup.userId": await userId.toString() } },
+            ]
+        ).exec();
+    }
 
-    // // Создание новой записи
-    // async createGroup(groupInput: GroupInput): Promise<Group> {
-    //     return await this.groupsRepository.save({
-    //         name: groupInput.name,
-    //         shortName: groupInput.shortName,
-    //         levelId: groupInput.levelId,
-    //     })
-    // }
-    //
     /**
      * Get record for the specified levelId
      *

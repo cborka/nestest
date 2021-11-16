@@ -34,8 +34,10 @@ export class User {
     @Prop()
     password: string;
 
+    @Field()
     @Prop({ required: false })
-    createdAt?: number
+    createdAt: number
+
 
     @Field({nullable: true})
     @Prop()

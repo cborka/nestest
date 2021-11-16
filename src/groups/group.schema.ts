@@ -3,6 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import {Document, Types} from 'mongoose';
 
 import {Level} from '../levels/level.schema';
+import {User} from "../users/user.schema";
 
 export type GroupDocument = Group & Document;
 
@@ -30,6 +31,11 @@ export class Group {
     @Field(type => Level, {nullable: true})
     @Prop({ type: Types.ObjectId, required: false, ref: 'Level' })
     level: Level
+
+    @Field(type => [User])
+    @Prop({ type: Types.ObjectId, required: false, ref: 'User' })
+    users: User[]
+
 }
 
 export const GroupSchema = SchemaFactory.createForClass(Group);

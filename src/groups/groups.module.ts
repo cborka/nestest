@@ -13,15 +13,18 @@ import {GroupsResolver} from "./groups.resolver";
 import {Level, LevelSchema} from "../levels/level.schema";
 import {Group, GroupSchema} from "./group.schema";
 import {LevelsService} from "../levels/levels.service";
+import {UsersService} from "../users/users.service";
+import {User, UserSchema} from "../users/user.schema";
 
 @Module({
     imports: [
         MongooseModule.forFeature([
             { name: Group.name, schema: GroupSchema },
-            { name: Level.name, schema: LevelSchema }
+            { name: Level.name, schema: LevelSchema },
+            { name: User.name, schema: UserSchema }
         ])
     ],
-    providers: [GroupsService, GroupsResolver, LevelsService]
+    providers: [GroupsService, GroupsResolver, LevelsService, UsersService]
 //    providers: [GroupsService, LevelsService, UsersService, UserInGroupService, GroupsResolver, LevelEntity]
 })
 export class GroupsModule {}
